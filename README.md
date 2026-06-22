@@ -261,6 +261,9 @@ Additional dependencies:
 
 ```bash
 pnpm add @tanstack/react-query awilix i18next i18next-browser-languagedetector lucide-react react react-dom react-i18next react-router-dom
+```
+
+```bash
 pnpm install tailwindcss @tailwindcss/vite
 ```
 
