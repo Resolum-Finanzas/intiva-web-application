@@ -29,7 +29,7 @@ const SimuladorCreditoScreen: React.FC = () => {
     <PageContainer>
       <div className="flex items-center justify-between mb-6">
         <div>
-          <h1 className="text-2xl font-bold text-[#1A237E]">Simulador de Crédito</h1>
+          <h1 className="text-2xl font-bold text-[var(--color-text-primary)]">Simulador de Crédito</h1>
           <p className="text-sm text-gray-500 mt-1">
             Calcula tu plan de financiamiento vehicular
           </p>
@@ -37,7 +37,7 @@ const SimuladorCreditoScreen: React.FC = () => {
         {result && (
           <button
             onClick={reset}
-            className="border border-gray-300 text-gray-600 text-sm px-4 py-2 rounded-lg hover:bg-gray-50 transition-all duration-200"
+            className="border border-gray-300 text-gray-600 text-sm px-4 py-2 rounded-lg hover:bg-gray-50 transition-all duration-200 cursor-pointer"
           >
             Nueva Simulación
           </button>
@@ -60,8 +60,8 @@ const SimuladorCreditoScreen: React.FC = () => {
         )}
 
         {!result && (
-          <div className="bg-white rounded-2xl border border-gray-200 p-12 shadow-sm flex flex-col items-center justify-center text-center">
-            <div className="w-20 h-20 rounded-full bg-[#E8EAF6] flex items-center justify-center mb-4">
+          <div className="bg-[var(--color-bg-surface)] rounded-2xl border border-gray-200 p-12 shadow-sm flex flex-col items-center justify-center text-center">
+            <div className="w-20 h-20 rounded-full bg-[var(--color-primary-50)] flex items-center justify-center mb-4">
               <span className="text-3xl">📊</span>
             </div>
             <h3 className="text-lg font-semibold text-gray-700 mb-2">

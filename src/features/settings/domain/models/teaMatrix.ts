@@ -12,12 +12,12 @@ export const TEA_MATRIX_ENTRIES: TeaMatrixEntry[] = [
     vehicleType: 'Ligeros',
     label: 'Vehículos Ligeros',
     icon: 'Car',
-    route: '/settings/tea/ligeros',
+    route: '/settings/tea/light',
   },
   {
     vehicleType: 'Comerciales',
     label: 'Vehículos Comerciales',
     icon: 'Truck',
-    route: '/settings/tea/comerciales',
+    route: '/settings/tea/commercial',
   },
 ];

@@ -71,11 +71,11 @@ const Sidebar: React.FC<SidebarProps> = ({ activeItem, onNavigate, user }) => {
     item.children?.some((child) => child.label === activeItem);
 
   return (
-    <aside className="fixed left-0 top-0 h-screen w-[220px] flex flex-col justify-between bg-[#F0F2F8] z-30 animate-slide-in-left">
+    <aside className="fixed left-0 top-0 h-screen w-[220px] flex flex-col justify-between bg-[var(--color-bg-sidebar)] z-30 animate-slide-in-left transition-colors duration-300">
       <div>
         <div className="px-5 pt-6 pb-4 animate-fade-in-up">
-          <h1 className="font-bold text-xl text-[#1A237E]">Intiva</h1>
-          <p className="text-xs text-[#6B7280] font-medium mt-0.5">Automotive Credit</p>
+          <h1 className="font-bold text-xl text-[var(--color-text-primary)]">Intiva</h1>
+          <p className="text-xs text-[var(--color-text-muted)] font-medium mt-0.5">Automotive Credit</p>
         </div>
 
         <nav className="flex flex-col gap-1 px-2">
@@ -89,13 +89,13 @@ const Sidebar: React.FC<SidebarProps> = ({ activeItem, onNavigate, user }) => {
                 <button
                   onClick={() => handleNavClick(item)}
                   className={`group w-full flex items-center gap-3 px-2.5 py-2.5 rounded-xl transition-all duration-300 ease-out ${active
-                      ? 'bg-white text-[#1A237E] border-r-4 border-[#1A237E] shadow-sm'
-                      : 'text-[#6B7280] hover:bg-white/80 hover:text-[#1A237E] hover:shadow-xs'
+                      ? 'bg-[var(--color-bg-active-item)] text-[var(--color-text-primary)] border-r-4 border-[var(--color-text-primary)] shadow-sm'
+                      : 'text-[var(--color-text-muted)] hover:bg-[var(--color-bg-surface)]/80 hover:text-[var(--color-text-primary)] hover:shadow-xs'
                     }`}
                 >
                   <span className={`flex h-9 w-9 items-center justify-center rounded-xl transition-all duration-300 ${active
-                      ? 'bg-[#EEF2FF] text-[#1A237E] scale-100'
-                      : 'text-[#6B7280] group-hover:scale-110 group-hover:bg-[#EEF2FF]/50'
+                      ? 'bg-[var(--color-bg-icon-active)] text-[var(--color-text-primary)] scale-100'
+                      : 'text-[var(--color-text-muted)] group-hover:scale-110 group-hover:bg-[var(--color-bg-icon-active)]/50'
                     }`}>
                     <Icon size={17} className="transition-transform duration-300 group-hover:scale-110" />
                   </span>
@@ -107,7 +107,7 @@ const Sidebar: React.FC<SidebarProps> = ({ activeItem, onNavigate, user }) => {
                   {item.children && (
                     <ChevronRight
                       size={14}
-                      className={`transition-transform duration-200 text-[#9CA3AF] ${isExpanded ? 'rotate-90' : ''}`}
+                      className={`transition-transform duration-200 text-[var(--color-text-muted)] ${isExpanded ? 'rotate-90' : ''}`}
                     />
                   )}
                 </button>
@@ -125,13 +125,13 @@ const Sidebar: React.FC<SidebarProps> = ({ activeItem, onNavigate, user }) => {
                           onClick={() => onNavigate(child.label)}
                           style={{ animationDelay: `${(idx + 0.3) * 0.08}s` }}
                           className={`group w-full flex items-center gap-3 px-2.5 py-2.5 rounded-xl transition-all duration-300 ease-out animate-scale-in ${isChildActive
-                              ? 'bg-white text-[#1A237E] border-r-4 border-[#1A237E] shadow-sm'
-                              : 'text-[#6B7280] hover:bg-white/80 hover:text-[#1A237E] hover:shadow-xs'
+                              ? 'bg-[var(--color-bg-active-item)] text-[var(--color-text-primary)] border-r-4 border-[var(--color-text-primary)] shadow-sm'
+                              : 'text-[var(--color-text-muted)] hover:bg-[var(--color-bg-surface)]/80 hover:text-[var(--color-text-primary)] hover:shadow-xs'
                             }`}
                         >
                           <span className={`flex h-8 w-8 items-center justify-center rounded-xl transition-all duration-300 ${isChildActive
-                              ? 'bg-[#EEF2FF] text-[#1A237E]'
-                              : 'text-[#6B7280] group-hover:scale-110 group-hover:bg-[#EEF2FF]/50'
+                              ? 'bg-[var(--color-bg-icon-active)] text-[var(--color-text-primary)]'
+                              : 'text-[var(--color-text-muted)] group-hover:scale-110 group-hover:bg-[var(--color-bg-icon-active)]/50'
                             }`}>
                             <ChildIcon size={15} className="transition-transform duration-300 group-hover:scale-110" />
                           </span>
@@ -150,14 +150,14 @@ const Sidebar: React.FC<SidebarProps> = ({ activeItem, onNavigate, user }) => {
         </nav>
       </div>
 
-      <div className="border-t border-[#E5E7EB] p-4 animate-fade-in-up" style={{ animationDelay: '0.5s' }}>
+      <div className="border-t border-[var(--color-border-divider)] p-4 animate-fade-in-up" style={{ animationDelay: '0.5s' }}>
         <div className="group flex items-center gap-3 transition-all duration-300 hover:translate-x-1">
-          <div className="w-9 h-9 rounded-full bg-[#1A237E] flex items-center justify-center text-white text-xs font-bold shrink-0 transition-transform duration-300 group-hover:scale-110 group-hover:shadow-md">
+          <div className="w-9 h-9 rounded-full bg-[var(--color-accent-primary)] flex items-center justify-center text-[var(--color-text-on-primary)] text-xs font-bold shrink-0 transition-transform duration-300 group-hover:scale-110 group-hover:shadow-md">
             {getInitials(user.name)}
           </div>
           <div className="min-w-0">
-            <p className="text-sm font-semibold text-[#111827] truncate">{user.name}</p>
-            <p className="text-xs text-[#6B7280] truncate">Personal Account</p>
+            <p className="text-sm font-semibold text-[var(--color-text-dark)] truncate">{user.name}</p>
+            <p className="text-xs text-[var(--color-text-muted)] truncate">Personal Account</p>
           </div>
         </div>
       </div>

@@ -36,8 +36,8 @@ const SimulatorForm: React.FC<SimulatorFormProps> = ({
   };
 
   return (
-    <div className="bg-white rounded-2xl border border-gray-200 p-6 shadow-sm">
-      <h2 className="text-lg font-bold text-[#1A237E] mb-5 flex items-center gap-2">
+    <div className="bg-[var(--color-bg-surface)] rounded-2xl border border-gray-200 p-6 shadow-sm">
+      <h2 className="text-lg font-bold text-[var(--color-text-primary)] mb-5 flex items-center gap-2">
         <Calculator size={20} />
         Parámetros del Crédito
       </h2>
@@ -48,7 +48,7 @@ const SimulatorForm: React.FC<SimulatorFormProps> = ({
           <select
             value={selectedVehicleId}
             onChange={(e) => handleVehicleChange(e.target.value)}
-            className="w-full border border-gray-300 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#1A237E]"
+            className="w-full border border-gray-300 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-accent-primary)]"
           >
             <option value="">Seleccionar vehículo</option>
             {vehicles.map((v) => (
@@ -70,7 +70,7 @@ const SimulatorForm: React.FC<SimulatorFormProps> = ({
                 type="number"
                 value={params.vehiclePrice}
                 onChange={(e) => onUpdateParam('vehiclePrice', Number(e.target.value))}
-                className="w-full border border-gray-300 rounded-xl pl-8 pr-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#1A237E]"
+                className="w-full border border-gray-300 rounded-xl pl-8 pr-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-accent-primary)]"
               />
             </div>
           </div>
@@ -82,7 +82,7 @@ const SimulatorForm: React.FC<SimulatorFormProps> = ({
                 type="number"
                 value={params.downPayment}
                 onChange={(e) => onUpdateParam('downPayment', Number(e.target.value))}
-                className="w-full border border-gray-300 rounded-xl pl-8 pr-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#1A237E]"
+                className="w-full border border-gray-300 rounded-xl pl-8 pr-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-accent-primary)]"
               />
             </div>
           </div>
@@ -94,7 +94,7 @@ const SimulatorForm: React.FC<SimulatorFormProps> = ({
             <select
               value={params.termMonths}
               onChange={(e) => onUpdateParam('termMonths', Number(e.target.value))}
-              className="w-full border border-gray-300 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#1A237E]"
+              className="w-full border border-gray-300 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-accent-primary)]"
             >
               {TERM_OPTIONS.map((m) => (
                 <option key={m} value={m}>{m} meses</option>
@@ -108,7 +108,7 @@ const SimulatorForm: React.FC<SimulatorFormProps> = ({
               step="0.01"
               value={Number((params.tea * 100).toFixed(2))}
               onChange={(e) => onUpdateParam('tea', Number(e.target.value) / 100)}
-              className="w-full border border-gray-300 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#1A237E]"
+              className="w-full border border-gray-300 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-accent-primary)]"
             />
           </div>
         </div>
@@ -121,7 +121,7 @@ const SimulatorForm: React.FC<SimulatorFormProps> = ({
             <select
               value={params.gracePeriodMonths ?? 0}
               onChange={(e) => onUpdateParam('gracePeriodMonths', Number(e.target.value))}
-              className="w-full border border-gray-300 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#1A237E]"
+              className="w-full border border-gray-300 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-accent-primary)]"
             >
               {GRACE_OPTIONS.map((m) => (
                 <option key={m} value={m}>{m === 0 ? 'Sin gracia' : `${m} meses`}</option>
@@ -135,7 +135,7 @@ const SimulatorForm: React.FC<SimulatorFormProps> = ({
             <select
               value={Math.round((params.balloonPercent ?? 0) * 100)}
               onChange={(e) => onUpdateParam('balloonPercent', Number(e.target.value) / 100)}
-              className="w-full border border-gray-300 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#1A237E]"
+              className="w-full border border-gray-300 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-accent-primary)]"
             >
               {[0, 10, 20, 30, 40, 50].map((p) => (
                 <option key={p} value={p}>{p === 0 ? 'Sin balón' : `${p}%`}</option>
@@ -164,7 +164,7 @@ const SimulatorForm: React.FC<SimulatorFormProps> = ({
         <button
           onClick={onCalculate}
           disabled={loading || params.vehiclePrice <= params.downPayment}
-          className="w-full bg-[#1A237E] text-white py-3 rounded-xl font-semibold text-sm hover:bg-[#283593] transition duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+          className="w-full bg-[var(--color-accent-primary)] text-white py-3 rounded-xl font-semibold text-sm hover:bg-[var(--color-primary-800)] transition-all duration-300 hover:shadow-xl hover:scale-105 transform cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
         >
           <Calculator size={18} />
           {loading ? 'Calculando...' : 'Simular Crédito'}

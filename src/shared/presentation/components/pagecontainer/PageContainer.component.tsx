@@ -11,8 +11,8 @@ interface PageContainerProps {
 }
 
 const variantStyles: Record<PageContainerVariant, string> = {
-  default: 'bg-[#F5F5F5]',
-  white: 'bg-white rounded-xl shadow-sm',
+  default: 'bg-[var(--color-bg-page)]',
+  white: 'bg-[var(--color-bg-surface)] rounded-xl shadow-sm',
   flush: 'p-0',
 };
 
@@ -27,8 +27,8 @@ const PageContainer: React.FC<PageContainerProps> = ({
     {(title || subtitle || actions) && (
       <div className="flex items-start justify-between mb-6">
         <div>
-          {title && <h1 className="text-2xl font-bold text-[#1A237E]">{title}</h1>}
-          {subtitle && <p className="text-sm text-[#9E9E9E] mt-1">{subtitle}</p>}
+          {title && <h1 className="text-2xl font-bold text-[var(--color-text-primary)]">{title}</h1>}
+          {subtitle && <p className="text-sm text-[var(--color-text-default)] mt-1">{subtitle}</p>}
         </div>
         {actions && <div className="flex items-center gap-2 shrink-0 ml-4">{actions}</div>}
       </div>

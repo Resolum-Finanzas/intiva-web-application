@@ -23,7 +23,7 @@ const BasicDataForm: React.FC<BasicDataFormProps> = ({ input, onChange, teaRange
 
   return (
     <div>
-      <h3 className="text-base font-bold text-[#1A237E] mb-5 flex items-center gap-2">
+      <h3 className="text-base font-bold text-[var(--color-text-primary)] mb-5 flex items-center gap-2">
         <FileText size={18} />
         {t('simulator.basicData')}
       </h3>
@@ -41,7 +41,7 @@ const BasicDataForm: React.FC<BasicDataFormProps> = ({ input, onChange, teaRange
                 min={10}
                 max={60}
                 onChange={(e) => handleDownPaymentPct(Number(e.target.value))}
-                className="w-full border border-gray-200 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#1A237E] pr-7"
+                className="w-full border border-gray-200 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-accent-primary)] pr-7"
               />
               <span className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-400 text-sm">%</span>
             </div>
@@ -51,7 +51,7 @@ const BasicDataForm: React.FC<BasicDataFormProps> = ({ input, onChange, teaRange
                 type="text"
                 value={`${fmt(input.downPaymentAmount)}`}
                 readOnly
-                className="w-full bg-[#F5F5F5] border border-gray-200 rounded-lg pl-8 pr-3 py-2.5 text-sm text-gray-600"
+                className="w-full bg-[var(--color-bg-page)] border border-gray-200 rounded-lg pl-8 pr-3 py-2.5 text-sm text-gray-600"
               />
             </div>
           </div>
@@ -62,9 +62,9 @@ const BasicDataForm: React.FC<BasicDataFormProps> = ({ input, onChange, teaRange
             step={1}
             value={input.downPaymentPct}
             onChange={(e) => handleDownPaymentPct(Number(e.target.value))}
-            className="w-full h-2 rounded-full appearance-none cursor-pointer accent-[#1A237E]"
+            className="w-full h-2 rounded-full appearance-none cursor-pointer accent-[var(--color-accent-primary)]"
             style={{
-              background: `linear-gradient(to right, #1A237E ${((input.downPaymentPct - 10) / 50) * 100}%, #E0E0E0 ${((input.downPaymentPct - 10) / 50) * 100}%)`,
+              background: `linear-gradient(to right, var(--color-accent-primary) ${((input.downPaymentPct - 10) / 50) * 100}%, var(--color-border) ${((input.downPaymentPct - 10) / 50) * 100}%)`,
             }}
           />
           <div className="flex justify-between text-xs text-gray-400 mt-1">
@@ -84,7 +84,7 @@ const BasicDataForm: React.FC<BasicDataFormProps> = ({ input, onChange, teaRange
                 type="text"
                 value={`${fmt(input.financedAmount)}`}
                 readOnly
-                className="w-full bg-[#F5F5F5] border border-gray-200 rounded-lg pl-8 pr-3 py-3 text-sm text-gray-600"
+                className="w-full bg-[var(--color-bg-page)] border border-gray-200 rounded-lg pl-8 pr-3 py-3 text-sm text-gray-600"
               />
             </div>
           </div>
@@ -95,7 +95,7 @@ const BasicDataForm: React.FC<BasicDataFormProps> = ({ input, onChange, teaRange
               step="0.01"
               value={Number((input.tea * 100).toFixed(2))}
               onChange={(e) => onChange('tea', Number(e.target.value) / 100)}
-              className="w-full border border-gray-200 rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#1A237E]"
+              className="w-full border border-gray-200 rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-accent-primary)]"
             />
             <p className="text-xs text-gray-500 mt-1">
               {t('simulator.suggestedRange', { min: (teaRange.min * 100).toFixed(2), max: (teaRange.max * 100).toFixed(2) })}
@@ -111,7 +111,7 @@ const BasicDataForm: React.FC<BasicDataFormProps> = ({ input, onChange, teaRange
             <select
               value={input.bank}
               onChange={(e) => onChange('bank', e.target.value)}
-              className="w-full border border-gray-200 rounded-lg px-4 py-3 text-sm appearance-none focus:outline-none focus:ring-2 focus:ring-[#1A237E] bg-white"
+              className="w-full border border-gray-200 rounded-lg px-4 py-3 text-sm appearance-none focus:outline-none focus:ring-2 focus:ring-[var(--color-accent-primary)] bg-[var(--color-bg-surface)]"
             >
               <option value="BCP">BCP</option>
               <option value="BBVA">BBVA</option>
