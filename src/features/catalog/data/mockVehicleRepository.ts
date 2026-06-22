@@ -1,8 +1,8 @@
-import type { VehicleRepository } from '../../domain/repositories/vehicleRepository';
-import type { Vehicle, VehicleCategory } from '../../domain/models/vehicle';
-import { getVehicles } from '../remote/services/vehicleService';
+import type { VehicleRepository } from '../domain/repositories/vehicleRepository';
+import type { Vehicle, VehicleCategory } from '../domain/models/vehicle';
+import { getVehicles } from './remote/services/vehicleService';
 
-function mapToDomain(dto: import('../remote/models/vehicleDto').VehicleDto): Vehicle {
+function mapToDomain(dto: import('./remote/models/vehicleDto').VehicleDto): Vehicle {
   return {
     id: dto.id,
     name: dto.name,

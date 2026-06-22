@@ -17,10 +17,10 @@ const CategoryFilter: React.FC<CategoryFilterProps> = ({ active, onChange }) => 
           <button
             key={cat}
             onClick={() => onChange(cat)}
-            className={`rounded-full px-4 py-1 text-sm transition-all duration-200 ${
+            className={`rounded-full px-4 py-1 text-sm transition-all duration-300 hover:shadow-xl hover:scale-105 transform cursor-pointer ${
               isActive
-                ? 'bg-[#1A237E] text-white'
-                : 'border border-gray-300 text-gray-600 hover:border-[#1A237E] hover:text-[#1A237E]'
+                ? 'bg-[var(--color-accent-primary)] text-white'
+                : 'border border-gray-300 text-gray-600 hover:border-[var(--color-accent-primary)] hover:text-[var(--color-text-primary)]'
             }`}
           >
             {cat}

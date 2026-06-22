@@ -1,5 +1,7 @@
 import { useState } from 'react';
-import { Search, Bell } from 'lucide-react';
+import { Search } from 'lucide-react';
+import { LanguageSwitcher } from '../i18n/LanguageSwitcher';
+import { ThemeToggle } from '../theme/ThemeToggle';
 
 interface HeaderProps {
   user: {
@@ -16,9 +18,9 @@ const Header: React.FC<HeaderProps> = ({ user, onSearch }) => {
   const [query, setQuery] = useState('');
 
   return (
-    <header className="h-16 bg-white border-b border-[#E0E0E0] shadow-sm flex items-center justify-between px-6">
+    <header className="h-16 bg-[var(--color-bg-surface)] border-b border-[var(--color-border)] shadow-sm flex items-center justify-between px-6 transition-colors duration-300">
       <div className="relative">
-        <Search size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-[#9E9E9E]" />
+        <Search size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-[var(--color-text-default)]" />
         <input
           type="text"
           placeholder="Search vehicles, clients..."
@@ -27,15 +29,14 @@ const Header: React.FC<HeaderProps> = ({ user, onSearch }) => {
             setQuery(e.target.value);
             onSearch?.(e.target.value);
           }}
-          className="bg-[#F5F5F5] rounded-full px-4 py-2 pl-10 w-80 border border-[#E0E0E0] text-sm text-[#9E9E9E] focus:outline-none focus:ring-2 focus:ring-[#1A237E]"
+          className="bg-[var(--color-bg-page)] rounded-full px-4 py-2 pl-10 w-80 border border-[var(--color-border)] text-sm text-[var(--color-text-default)] focus:outline-none focus:ring-2 focus:ring-[var(--color-accent-primary)]"
         />
       </div>
 
       <div className="flex items-center gap-4">
-        <button className="relative text-[#9E9E9E] hover:text-[#1A237E] transition-colors duration-200">
-          <Bell size={20} />
-        </button>
-        <div className="w-9 h-9 rounded-full bg-[#1A237E] flex items-center justify-center text-white text-sm font-bold cursor-pointer hover:ring-2 hover:ring-[#2E7D32] transition-all duration-200 shrink-0">
+        <LanguageSwitcher />
+        <ThemeToggle />
+        <div className="w-9 h-9 rounded-full bg-[var(--color-accent-primary)] flex items-center justify-center text-[var(--color-text-on-primary)] text-sm font-bold cursor-pointer hover:ring-2 hover:ring-[var(--color-accent-secondary)] transition-all duration-200 shrink-0">
           {getInitials(user.name)}
         </div>
       </div>

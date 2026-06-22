@@ -46,7 +46,7 @@ const SimulatorResults: React.FC<SimulatorResultsProps> = ({ result, onSave }) =
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <h2 className="text-lg font-bold text-[#1A237E] flex items-center gap-2">
+        <h2 className="text-lg font-bold text-[var(--color-text-primary)] flex items-center gap-2">
           <BarChart3 size={20} />
           Resultados de la Simulación
         </h2>
@@ -54,7 +54,7 @@ const SimulatorResults: React.FC<SimulatorResultsProps> = ({ result, onSave }) =
           {onSave && (
             <button
               onClick={onSave}
-              className="border border-gray-300 text-gray-600 text-sm px-4 py-2 rounded-lg flex items-center gap-2 hover:bg-gray-50 transition-all duration-200"
+              className="border border-gray-300 text-gray-600 text-sm px-4 py-2 rounded-lg flex items-center gap-2 hover:bg-gray-50 transition-all duration-200 cursor-pointer"
             >
               <Download size={16} />
               Guardar
@@ -62,7 +62,7 @@ const SimulatorResults: React.FC<SimulatorResultsProps> = ({ result, onSave }) =
           )}
           <button
             onClick={() => navigate('/simulador/schedule')}
-            className="bg-[#1A237E] text-white text-sm px-4 py-2 rounded-lg flex items-center gap-2 hover:bg-[#283593] transition-all duration-200"
+            className="bg-[var(--color-accent-primary)] text-white text-sm px-4 py-2 rounded-lg flex items-center gap-2 hover:bg-[var(--color-primary-800)] transition-all duration-300 hover:shadow-xl hover:scale-105 transform cursor-pointer"
           >
             <Calendar size={16} />
             Ver Cronograma
@@ -72,17 +72,17 @@ const SimulatorResults: React.FC<SimulatorResultsProps> = ({ result, onSave }) =
 
       <div className="grid grid-cols-3 gap-4">
         {metricCards.map((m) => (
-          <div key={m.label} className="bg-white border border-gray-200 rounded-xl p-4 shadow-sm">
+          <div key={m.label} className="bg-[var(--color-bg-surface)] border border-gray-200 rounded-xl p-4 shadow-sm">
             <div className="flex items-center gap-2 mb-2">
-              <m.icon size={16} className="text-[#1A237E]" />
+              <m.icon size={16} className="text-[var(--color-text-primary)]" />
               <p className="text-xs text-gray-400 uppercase tracking-wider">{m.label}</p>
             </div>
-            <p className="text-xl font-bold text-[#1A237E]">{m.value}</p>
+            <p className="text-xl font-bold text-[var(--color-text-primary)]">{m.value}</p>
           </div>
         ))}
       </div>
 
-      <div className="bg-white rounded-xl shadow-sm overflow-hidden">
+      <div className="bg-[var(--color-bg-surface)] rounded-xl shadow-sm overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-xs">
             <thead>
@@ -101,19 +101,19 @@ const SimulatorResults: React.FC<SimulatorResultsProps> = ({ result, onSave }) =
             <tbody className="divide-y divide-gray-100">
               {schedule.map((r) => {
                 const rowBg = r.isGrace
-                  ? 'bg-[#E8EAF6]'
+                  ? 'bg-[var(--color-primary-50)]'
                   : r.isBalloon
-                  ? 'bg-[#1A237E] text-white'
-                  : 'bg-white';
+                  ? 'bg-[var(--color-accent-primary)] text-white'
+                  : 'bg-[var(--color-bg-surface)]';
 
                 return (
                   <tr key={r.num} className={`${rowBg} hover:bg-gray-50 transition-colors`}>
                     <td className="px-3 py-2.5">
                       <div className="flex items-center gap-1.5">
-                        {r.isGrace && <PauseCircle size={12} className="text-[#1A237E]" />}
+                        {r.isGrace && <PauseCircle size={12} className="text-[var(--color-text-primary)]" />}
                         <span>
                           {r.isBalloon ? (
-                            <span className="bg-[#2E7D32] text-white text-xs rounded px-1.5 py-0.5">
+                            <span className="bg-[var(--color-accent-secondary)] text-white text-xs rounded px-1.5 py-0.5">
                               CUOTA BALÓN
                             </span>
                           ) : (
@@ -136,7 +136,7 @@ const SimulatorResults: React.FC<SimulatorResultsProps> = ({ result, onSave }) =
                 );
               })}
 
-              <tr className="bg-[#1A237E] text-white font-bold">
+              <tr className="bg-[var(--color-accent-primary)] text-white font-bold">
                 <td className="px-3 py-2.5" colSpan={2}>TOTALES</td>
                 <td className="px-3 py-2.5">S/ {fmt(totals.saldoInicial)}</td>
                 <td className="px-3 py-2.5">S/ {fmt(totals.interes)}</td>

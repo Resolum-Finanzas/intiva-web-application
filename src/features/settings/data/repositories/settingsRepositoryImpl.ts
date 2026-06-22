@@ -1,11 +1,12 @@
 import type { SettingsRepository } from '../../domain/repositories/settingsRepository';
 import type { BaseConfig } from '../../domain/models/baseConfig';
 import type { LifeInsuranceRate } from '../../domain/models/lifeInsuranceRate';
-import type { TeaMatrixEntry } from '../../domain/models/teaMatrix';
+import type { TeaMatrixEntry, VehicleType } from '../../domain/models/teaMatrix';
+import type { TeaRate } from '../../domain/models/teaRate';
 import type { AmountLimits } from '../../domain/models/amountLimits';
 import { DEFAULT_BASE_CONFIG } from '../../domain/models/baseConfig';
 import { TEA_MATRIX_ENTRIES } from '../../domain/models/teaMatrix';
-import { loadLifeInsuranceRates, saveLifeInsuranceRates, loadAmountLimits, saveAmountLimits } from '../remote/services/settingsService';
+import { loadLifeInsuranceRates, saveLifeInsuranceRates, loadTeaRates, saveTeaRates, loadAmountLimits, saveAmountLimits } from '../remote/services/settingsService';
 
 export const settingsRepositoryImpl: SettingsRepository = {
   getBaseConfig(): BaseConfig {
@@ -18,6 +19,35 @@ export const settingsRepositoryImpl: SettingsRepository = {
 
   getTeaMatrixEntries(): TeaMatrixEntry[] {
     return TEA_MATRIX_ENTRIES;
+  },
+
+  getTeaRates(): TeaRate[] {
+    return loadTeaRates();
+  },
+
+  getTeaRatesByVehicle(vehicleType: VehicleType): TeaRate[] {
+    return loadTeaRates().filter((r) => r.vehicleType === vehicleType);
+  },
+
+  updateTeaRate(id: string, rate: number): TeaRate {
+    const rates = loadTeaRates();
+    const index = rates.findIndex((r) => r.id === id);
+    if (index === -1) {
+      throw new Error(`TeaRate with id "${id}" not found`);
+    }
+    const updated: TeaRate = {
+      ...rates[index],
+      rate,
+      rateLabel: `${(rate * 100).toFixed(2)}%`,
+      lastUpdated: new Date().toLocaleDateString('en-US', {
+        day: 'numeric',
+        month: 'short',
+        year: 'numeric',
+      }),
+    };
+    rates[index] = updated;
+    saveTeaRates(rates);
+    return updated;
   },
 
   getAmountLimits(): AmountLimits {

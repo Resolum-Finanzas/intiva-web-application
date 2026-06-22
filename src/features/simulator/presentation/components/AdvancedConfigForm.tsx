@@ -22,7 +22,7 @@ const AdvancedConfigForm: React.FC<AdvancedConfigFormProps> = ({ input, onChange
 
   return (
     <div>
-      <h3 className="text-base font-bold text-[#1A237E] mb-5 flex items-center gap-2">
+      <h3 className="text-base font-bold text-[var(--color-text-primary)] mb-5 flex items-center gap-2">
         <SlidersHorizontal size={18} />
         {t('simulator.advancedConfig')}
       </h3>
@@ -36,7 +36,7 @@ const AdvancedConfigForm: React.FC<AdvancedConfigFormProps> = ({ input, onChange
             <select
               value={input.termMonths}
               onChange={(e) => onChange('termMonths', Number(e.target.value))}
-              className="w-full border border-gray-200 rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#1A237E] bg-white"
+              className="w-full border border-gray-200 rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-accent-primary)] bg-[var(--color-bg-surface)]"
             >
               {TERM_OPTIONS.map((m) => (
                 <option key={m} value={m}>{m} {t('simulator.months')}</option>
@@ -69,7 +69,7 @@ const AdvancedConfigForm: React.FC<AdvancedConfigFormProps> = ({ input, onChange
               <select
                 value={input.riskLevel}
                 onChange={(e) => onChange('riskLevel', e.target.value as RiskLevel)}
-                className="w-full bg-[#F5F5F5] rounded-lg px-4 py-2 text-sm border border-gray-100 focus:outline-none focus:ring-2 focus:ring-[#1A237E]"
+                className="w-full bg-[var(--color-bg-page)] rounded-lg px-4 py-2 text-sm border border-gray-100 focus:outline-none focus:ring-2 focus:ring-[var(--color-accent-primary)]"
               >
                 {(Object.keys(RISK_LEVEL_LABELS) as RiskLevel[]).map((key) => (
                   <option key={key} value={key}>
@@ -112,9 +112,9 @@ const AdvancedConfigForm: React.FC<AdvancedConfigFormProps> = ({ input, onChange
                 <button
                   type="button"
                   onClick={() => handleGraceType('Total')}
-                  className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200 ${
+                  className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 hover:shadow-xl hover:scale-105 transform cursor-pointer ${
                     input.gracePeriodType === 'Total'
-                      ? 'bg-[#1A237E] text-white'
+                      ? 'bg-[var(--color-accent-primary)] text-white'
                       : 'border border-gray-200 text-gray-600 hover:bg-gray-50'
                   }`}
                 >
@@ -123,9 +123,9 @@ const AdvancedConfigForm: React.FC<AdvancedConfigFormProps> = ({ input, onChange
                 <button
                   type="button"
                   onClick={() => handleGraceType('Parcial')}
-                  className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200 ${
+                  className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 hover:shadow-xl hover:scale-105 transform cursor-pointer ${
                     input.gracePeriodType === 'Parcial'
-                      ? 'bg-[#1A237E] text-white'
+                      ? 'bg-[var(--color-accent-primary)] text-white'
                       : 'border border-gray-200 text-gray-600 hover:bg-gray-50'
                   }`}
                 >
@@ -142,7 +142,7 @@ const AdvancedConfigForm: React.FC<AdvancedConfigFormProps> = ({ input, onChange
                     const v = Math.min(input.termMonths - 1, Math.max(1, Number(e.target.value)));
                     onChange('gracePeriodMonths', v);
                   }}
-                  className="w-20 border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#1A237E]"
+                  className="w-20 border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-accent-primary)]"
                 />
                 <span className="text-sm text-gray-600">{t('simulator.monthsLabel')}</span>
               </div>
@@ -158,7 +158,7 @@ const AdvancedConfigForm: React.FC<AdvancedConfigFormProps> = ({ input, onChange
             type="date"
             value={input.startDate}
             onChange={(e) => onChange('startDate', e.target.value)}
-            className="w-full border border-gray-200 rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#1A237E]"
+            className="w-full border border-gray-200 rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-accent-primary)]"
           />
         </div>
       </div>

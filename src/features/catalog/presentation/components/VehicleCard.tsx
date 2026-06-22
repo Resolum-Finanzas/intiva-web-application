@@ -9,7 +9,7 @@ interface VehicleCardProps {
 const badgeStyles: Record<string, string> = {
   Hybrid: 'bg-amber-500',
   Premium: 'bg-purple-600',
-  '100% Electric': 'bg-[#2E7D32]',
+  '100% Electric': 'bg-[var(--color-accent-secondary)]',
 };
 
 function getPrimarySpecs(specs: Vehicle['specs'], t: (key: string) => string): { label: string; value: string }[] {
@@ -25,7 +25,7 @@ const VehicleCard: React.FC<VehicleCardProps> = ({ vehicle, onViewDetails }) => 
   const primarySpecs = getPrimarySpecs(vehicle.specs, t);
 
   return (
-    <div className="group bg-white rounded-xl border border-gray-200 overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
+    <div className="group bg-[var(--color-bg-surface)] rounded-xl border border-gray-200 overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
       <div className="relative aspect-[16/9] bg-gray-100 overflow-hidden">
         <img
           src={vehicle.imageUrl}
@@ -51,14 +51,14 @@ const VehicleCard: React.FC<VehicleCardProps> = ({ vehicle, onViewDetails }) => 
           {primarySpecs.slice(0, 2).map((spec) => (
             <div key={spec.label}>
               <p className="text-xs text-gray-400">{spec.label}</p>
-              <p className="text-xs font-medium text-[#1A237E]">{spec.value}</p>
+              <p className="text-xs font-medium text-[var(--color-text-primary)]">{spec.value}</p>
             </div>
           ))}
         </div>
 
         <button
           onClick={() => onViewDetails(vehicle.id)}
-          className="w-full border border-gray-200 text-[#1A237E] text-sm rounded-lg py-2 mt-3 hover:bg-[#E8EAF6] hover:border-[#1A237E] transition-all duration-200 hover:scale-[1.02] active:scale-[0.98]"
+          className="w-full border border-gray-200 text-[var(--color-text-primary)] text-sm rounded-lg py-2 mt-3 hover:bg-[var(--color-primary-50)] hover:border-[var(--color-accent-primary)] transition-all duration-300 hover:shadow-xl hover:scale-105 transform cursor-pointer active:scale-[0.98]"
         >
           {t('catalog.viewDetails')}
         </button>

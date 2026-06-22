@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom';
 import { Download, Plus, PauseCircle } from 'lucide-react';
 import { useI18n } from '../../../../core/i18n/useI18n';
 import PageContainer from '../../../../shared/presentation/components/pagecontainer/PageContainer.component';
@@ -23,6 +24,7 @@ const fmt = (n: number) => n.toLocaleString('en-US', { minimumFractionDigits: 2,
 
 const SchedulePage: React.FC = () => {
   const { t } = useI18n();
+  const navigate = useNavigate();
 
   const metricLabels = [
     t('schedule.tea'),
@@ -34,13 +36,13 @@ const SchedulePage: React.FC = () => {
   return (
     <PageContainer>
       <div className="flex items-center justify-between mb-6 animate-fade-in-down">
-        <h1 className="text-2xl font-bold text-[#1A237E]">{t('schedule.title')}</h1>
+        <h1 className="text-2xl font-bold text-[var(--color-text-primary)]">{t('schedule.title')}</h1>
         <div className="flex gap-3">
-          <button className="border border-gray-300 text-gray-600 text-sm px-4 py-2 rounded-lg flex items-center gap-2 hover:bg-gray-50 transition-all duration-200">
+          <button className="border border-[var(--color-border)] text-[var(--color-text-muted)] text-sm px-4 py-2 rounded-lg flex items-center gap-2 hover:bg-[var(--color-bg-page)] transition-all duration-200 cursor-pointer">
             <Download size={16} />
             {t('common.exportPdf')}
           </button>
-          <button className="bg-[#1A237E] text-white text-sm px-4 py-2 rounded-lg flex items-center gap-2 hover:bg-[#283593] transition-all duration-200">
+          <button onClick={() => navigate('/simulator')} className="bg-primary text-white text-sm px-4 py-2 rounded-lg flex items-center gap-2 hover:opacity-90 transition-all duration-300 hover:shadow-xl hover:scale-105 transform cursor-pointer">
             <Plus size={16} />
             {t('common.newSimulation')}
           </button>
@@ -49,17 +51,17 @@ const SchedulePage: React.FC = () => {
 
       <div className="grid grid-cols-4 gap-4 mb-8">
         {metrics.map((m, i) => (
-          <div key={m.label} className="animate-fade-in-up bg-white border border-gray-200 rounded-xl p-4 shadow-sm" style={{ animationDelay: `${i * 0.08}s` }}>
-            <p className="text-xs text-gray-400 uppercase tracking-wider">{metricLabels[i]}</p>
-            <p className="text-2xl font-bold text-[#1A237E] mt-1">{m.value}</p>
+          <div key={m.label} className="animate-fade-in-up bg-[var(--color-bg-surface)] border border-[var(--color-border)] rounded-xl p-4 shadow-sm" style={{ animationDelay: `${i * 0.08}s` }}>
+            <p className="text-xs text-[var(--color-text-muted)] uppercase tracking-wider">{metricLabels[i]}</p>
+            <p className="text-2xl font-bold text-[var(--color-text-primary)] mt-1">{m.value}</p>
           </div>
         ))}
       </div>
 
-    <div className="bg-white rounded-xl shadow-sm overflow-hidden animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
+    <div className="bg-[var(--color-bg-surface)] rounded-xl shadow-sm overflow-hidden animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
       <table className="w-full text-xs">
           <thead>
-            <tr className="bg-gray-50 text-gray-500 font-semibold uppercase">
+            <tr className="bg-[var(--color-bg-page)] text-[var(--color-text-muted)] font-semibold uppercase">
               <td className="px-4 py-3">{t('schedule.installment')}</td>
               <td className="px-4 py-3">{t('schedule.date')}</td>
               <td className="px-4 py-3">{t('schedule.initialBalance')}</td>
@@ -71,18 +73,18 @@ const SchedulePage: React.FC = () => {
               <td className="px-4 py-3">{t('schedule.finalBalance')}</td>
             </tr>
           </thead>
-          <tbody className="divide-y divide-gray-100">
+          <tbody className="divide-y divide-[var(--color-border-light)]">
             {rows.map((r) => {
               const isGracia = r.gracia;
               const isBalon = r.balon;
-              const rowBg = isGracia ? 'bg-[#E8EAF6]' : isBalon ? 'bg-[#1A237E] text-white' : 'bg-white';
+              const rowBg = isGracia ? 'bg-[var(--color-primary-50)]' : isBalon ? 'bg-primary text-white' : 'bg-[var(--color-bg-surface)]';
 
               return (
-                <tr key={r.num} className={`${rowBg} hover:bg-gray-50 transition-colors`}>
+                <tr key={r.num} className={`${rowBg} hover:brightness-95 dark:hover:brightness-125 transition-all duration-150`}>
                   <td className="px-4 py-3">
                     <div className="flex items-center gap-2">
-                      {isGracia && <PauseCircle size={14} className="text-[#1A237E]" />}
-                      <span>{isBalon ? ( <span className="bg-[#2E7D32] text-white text-xs rounded px-1.5 py-0.5">{t('schedule.balloonPayment')}</span> ) : r.num}</span>
+                      {isGracia && <PauseCircle size={14} className="text-[var(--color-text-primary)]" />}
+                      <span>{isBalon ? ( <span className="bg-[var(--color-accent-secondary)] text-white text-xs rounded px-1.5 py-0.5">{t('schedule.balloonPayment')}</span> ) : r.num}</span>
                     </div>
                   </td>
                   <td className="px-4 py-3">{r.fecha}</td>
@@ -97,7 +99,7 @@ const SchedulePage: React.FC = () => {
               );
             })}
 
-            <tr className="bg-[#1A237E] text-white font-bold">
+            <tr className="bg-primary text-white font-bold">
               <td className="px-4 py-3" colSpan={2}>{t('schedule.totals')}</td>
               <td className="px-4 py-3">S/ {fmt(totalRow.saldoInicial)}</td>
               <td className="px-4 py-3">S/ {fmt(totalRow.interes)}</td>
@@ -111,7 +113,7 @@ const SchedulePage: React.FC = () => {
         </table>
       </div>
 
-      <p className="text-xs text-gray-400 italic mt-4">
+      <p className="text-xs text-[var(--color-text-muted)] italic mt-4">
         {t('schedule.referentialDisclaimer')}
       </p>
     </PageContainer>

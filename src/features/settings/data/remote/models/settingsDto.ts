@@ -1,6 +1,7 @@
 import type { BaseConfig } from '../../../domain/models/baseConfig';
 import type { LifeInsuranceRate } from '../../../domain/models/lifeInsuranceRate';
 import type { TeaMatrixEntry } from '../../../domain/models/teaMatrix';
+import type { TeaRate } from '../../../domain/models/teaRate';
 import type { AmountLimits } from '../../../domain/models/amountLimits';
 
 export interface BaseConfigDto {
@@ -25,6 +26,16 @@ export interface TeaMatrixEntryDto {
   label: string;
   icon: string;
   route: string;
+}
+
+export interface TeaRateDto {
+  id: string;
+  vehicleType: string;
+  riskProfile: string;
+  rate: number;
+  rateLabel: string;
+  lastUpdated: string;
+  isEditable: boolean;
 }
 
 export interface AmountLimitsDto {
@@ -57,6 +68,14 @@ export function teaMatrixEntryToDto(entry: TeaMatrixEntry): TeaMatrixEntryDto {
 
 export function teaMatrixEntryFromDto(dto: TeaMatrixEntryDto): TeaMatrixEntry {
   return dto as TeaMatrixEntry;
+}
+
+export function teaRateToDto(rate: TeaRate): TeaRateDto {
+  return { ...rate };
+}
+
+export function teaRateFromDto(dto: TeaRateDto): TeaRate {
+  return dto as TeaRate;
 }
 
 export function amountLimitsToDto(limits: AmountLimits): AmountLimitsDto {
