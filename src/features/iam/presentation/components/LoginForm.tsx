@@ -24,12 +24,12 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLogin, onGoRegister, error, loa
   return (
     <div className="min-h-screen bg-slate-50 flex items-center justify-center px-4 py-12">
       <div className="grid w-full max-w-6xl grid-cols-1 gap-10 xl:grid-cols-[420px_1fr]">
-        <div className="rounded-[2rem] border border-gray-200 bg-white/95 p-8 shadow-[0_24px_80px_rgba(15,23,42,0.08)] backdrop-blur-xl animate-slide-up">
+        <div className="rounded-[2rem] border border-gray-200 bg-[var(--color-bg-surface)]/95 p-8 shadow-[0_24px_80px_rgba(15,23,42,0.08)] backdrop-blur-xl animate-slide-up">
           <div className="flex flex-col items-center text-center mb-8">
-            <div className="w-16 h-16 rounded-full bg-[#1A237E] flex items-center justify-center text-white shadow-lg">
+            <div className="w-16 h-16 rounded-full bg-[var(--color-accent-primary)] flex items-center justify-center text-white shadow-lg">
               <Car size={28} />
             </div>
-            <h1 className="text-3xl font-bold text-[#1A237E] mt-6">Intiva</h1>
+            <h1 className="text-3xl font-bold text-[var(--color-text-primary)] mt-6">Intiva</h1>
             <p className="text-sm text-gray-500 mt-2">{t('auth.subtitle')}</p>
           </div>
 
@@ -44,7 +44,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLogin, onGoRegister, error, loa
                 placeholder={t('auth.email')}
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full border border-gray-300 rounded-2xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#1A237E] transition-all duration-200 focus:scale-[1.01]"
+                className="w-full border border-gray-300 rounded-2xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-accent-primary)] transition-all duration-200 focus:scale-[1.01]"
               />
             </div>
 
@@ -58,12 +58,12 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLogin, onGoRegister, error, loa
                 placeholder={t('auth.password')}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full border border-gray-300 rounded-2xl px-4 py-3 pr-10 text-sm focus:outline-none focus:ring-2 focus:ring-[#1A237E] transition-all duration-200 focus:scale-[1.01]"
+                className="w-full border border-gray-300 rounded-2xl px-4 py-3 pr-10 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-accent-primary)] transition-all duration-200 focus:scale-[1.01]"
               />
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 cursor-pointer"
                 aria-label={showPassword ? t('common.edit') : t('common.edit')}
               >
                 {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
@@ -78,14 +78,14 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLogin, onGoRegister, error, loa
             <button
               type="submit"
               disabled={loading}
-              className="w-full bg-[#1A237E] text-white py-3 rounded-full font-semibold text-sm hover:bg-[#283593] transition duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full bg-[var(--color-accent-primary)] text-white py-3 rounded-full font-semibold text-sm hover:bg-[var(--color-primary-800)] transition-all duration-300 hover:shadow-xl hover:scale-105 transform cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {loading ? t('auth.signingIn') : t('auth.signIn')}
             </button>
           </form>
 
           <div className="flex items-center justify-between mt-4 text-sm text-gray-500">
-            <button type="button" className="hover:text-[#1A237E] transition duration-200">
+            <button type="button" className="hover:text-[var(--color-text-primary)] transition duration-200 cursor-pointer">
               {t('auth.forgotPassword')}
             </button>
           </div>
@@ -98,7 +98,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLogin, onGoRegister, error, loa
 
           <button
             type="button"
-            className="w-full border border-gray-300 rounded-2xl py-3 flex items-center justify-center gap-2 text-sm hover:bg-gray-50 transition duration-200"
+            className="w-full border border-gray-300 rounded-2xl py-3 flex items-center justify-center gap-2 text-sm hover:bg-gray-50 transition duration-200 cursor-pointer"
           >
             <svg viewBox="0 0 24 24" className="w-5 h-5">
               <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 01-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.10z" />
@@ -111,17 +111,17 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLogin, onGoRegister, error, loa
 
           <p className="text-sm text-center mt-6 text-gray-500">
             {t('auth.noAccount')}{' '}
-            <button type="button" onClick={onGoRegister} className="text-[#2E7D32] font-semibold hover:text-[#1A237E] hover:underline transition duration-200">
+            <button type="button" onClick={onGoRegister} className="text-[var(--color-accent-secondary)] font-semibold hover:text-[var(--color-text-primary)] hover:underline transition duration-200 cursor-pointer">
               {t('auth.register')}
             </button>
           </p>
         </div>
 
-        <div className="hidden xl:flex items-center justify-center overflow-hidden rounded-[2rem] bg-[#1A237E] shadow-[0_24px_80px_rgba(15,23,42,0.12)] animate-fade-in" style={{ animationDelay: '0.2s' }}>
+        <div className="hidden xl:flex items-center justify-center overflow-hidden rounded-[2rem] bg-[var(--color-accent-primary)] shadow-[0_24px_80px_rgba(15,23,42,0.12)] animate-fade-in" style={{ animationDelay: '0.2s' }}>
           <div className="relative h-[520px] w-full">
             <img src={heroImg} alt="Intiva" className="h-full w-full object-cover opacity-90" />
             <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-slate-950/80 to-transparent p-8 text-white">
-              <p className="text-sm uppercase tracking-[0.24em] text-[#A8C3FF]">{t('auth.automotiveCredit')}</p>
+              <p className="text-sm uppercase tracking-[0.24em] text-[var(--color-primary-300)]">{t('auth.automotiveCredit')}</p>
               <h2 className="mt-3 text-3xl font-bold">{t('auth.heroTitle')}</h2>
               <p className="mt-4 text-sm leading-6 text-slate-200">
                 {t('auth.heroDesc')}

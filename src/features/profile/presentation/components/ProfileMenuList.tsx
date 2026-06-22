@@ -26,7 +26,7 @@ const ProfileMenuList: React.FC<ProfileMenuListProps> = ({ onLogout }) => {
 
   return (
     <div>
-        <h2 className="text-2xl font-bold text-[#1A237E]">{t('profile.title')}</h2>
+        <h2 className="text-2xl font-bold text-[var(--color-text-primary)]">{t('profile.title')}</h2>
       <p className="text-sm text-gray-500 mt-1 mb-6 animate-fade-in">{t('profile.subtitle')}</p>
 
       <div className="space-y-3">
@@ -35,10 +35,10 @@ const ProfileMenuList: React.FC<ProfileMenuListProps> = ({ onLogout }) => {
           return (
             <div
               key={item.title}
-              className="bg-white hover:bg-[#E8EAF6] rounded-xl p-4 flex items-center gap-4 cursor-pointer border border-gray-100 transition-all duration-200 hover:translate-x-1 hover:shadow-md"
+              className="bg-[var(--color-bg-surface)] hover:bg-[var(--color-primary-50)] rounded-xl p-4 flex items-center gap-4 cursor-pointer border border-gray-100 transition-all duration-200 hover:translate-x-1 hover:shadow-md"
               style={{ animationDelay: `${i * 0.08}s` }}
             >
-              <Icon size={20} className="text-[#1A237E] shrink-0" />
+              <Icon size={20} className="text-[var(--color-text-primary)] shrink-0" />
               <div className="flex-1 min-w-0">
                 <p className="text-sm font-semibold text-gray-800">{item.title}</p>
                 <p className="text-xs text-gray-400 truncate">{item.description}</p>
@@ -52,7 +52,7 @@ const ProfileMenuList: React.FC<ProfileMenuListProps> = ({ onLogout }) => {
       <div className="flex justify-end mt-6">
         <button
           onClick={onLogout}
-          className="border border-red-300 text-red-500 px-6 py-2 rounded-full text-sm flex items-center gap-2 hover:bg-red-50 hover:scale-105 active:scale-95 transition-all duration-200"
+          className="border border-red-300 text-red-500 px-6 py-2 rounded-full text-sm flex items-center gap-2 hover:bg-red-50 hover:shadow-xl hover:scale-105 active:scale-95 transition-all duration-300 transform cursor-pointer"
         >
           <LogOut size={16} />
           {t('common.logout')}

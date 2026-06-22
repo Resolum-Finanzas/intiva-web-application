@@ -50,10 +50,10 @@ const SettingsPage: React.FC = () => {
 
   return (
     <PageContainer title={t('settings.title')}>
-      <p className="text-sm text-[#9E9E9E] mb-6">
+      <p className="text-sm text-[var(--color-text-default)] mb-6">
         {t('settings.subtitleStart')}{' '}
-        <span className="text-[#1A237E] font-medium">{t('settings.subtitleInterest')}</span>,{' '}
-        <span className="text-[#2E7D32] font-medium">{t('settings.subtitleInsurance')}</span>{' '}
+        <span className="text-[var(--color-text-primary)] font-medium">{t('settings.subtitleInterest')}</span>,{' '}
+        <span className="text-[var(--color-accent-secondary)] font-medium">{t('settings.subtitleInsurance')}</span>{' '}
         {t('settings.subtitleEnd')}
       </p>
       <div className="grid grid-cols-[35%_65%] gap-6 mb-6">

@@ -17,7 +17,7 @@ const VehicleSearchBar: React.FC<VehicleSearchBarProps> = ({
 
   return (
     <div className="relative animate-fade-in-down">
-      <Search size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-[#9E9E9E]" />
+      <Search size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-[var(--color-text-default)]" />
       <input
         type="text"
         placeholder={resolvedPlaceholder}
@@ -26,7 +26,7 @@ const VehicleSearchBar: React.FC<VehicleSearchBarProps> = ({
           setQuery(e.target.value);
           onSearch(e.target.value);
         }}
-        className="bg-[#F5F5F5] rounded-full px-4 py-2 pl-10 w-80 border border-[#E0E0E0] text-sm text-[#9E9E9E] focus:outline-none focus:ring-2 focus:ring-[#1A237E] transition-all duration-200"
+        className="bg-[var(--color-bg-page)] rounded-full px-4 py-2 pl-10 w-80 border border-[#E0E0E0] text-sm text-[var(--color-text-default)] focus:outline-none focus:ring-2 focus:ring-[var(--color-accent-primary)] transition-all duration-200"
       />
     </div>
   );

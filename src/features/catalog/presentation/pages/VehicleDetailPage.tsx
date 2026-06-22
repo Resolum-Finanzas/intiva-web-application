@@ -63,7 +63,7 @@ const VehicleDetailPage: React.FC = () => {
                 key={i}
                 onClick={() => setActiveImage(i)}
                 className={`w-[120px] h-20 rounded-lg overflow-hidden border-2 transition-all duration-200 ${
-                  i === activeImage ? 'border-[#1A237E]' : 'border-transparent'
+                  i === activeImage ? 'border-[var(--color-accent-primary)]' : 'border-transparent'
                 }`}
               >
                 <img src={img} alt="" className="w-full h-full object-cover" />
@@ -79,7 +79,7 @@ const VehicleDetailPage: React.FC = () => {
                 const Icon = f.icon;
                 return (
                   <div key={i} className="flex items-center gap-2">
-                    <Icon size={16} className="text-[#1A237E]" />
+                    <Icon size={16} className="text-[var(--color-text-primary)]" />
                     <span className="text-sm text-gray-600">{f.label}</span>
                   </div>
                 );
@@ -89,7 +89,7 @@ const VehicleDetailPage: React.FC = () => {
         </div>
 
         <div className="w-[40%] sticky top-24 self-start animate-slide-up" style={{ animationDelay: '0.2s' }}>
-          <span className="bg-[#E8F5E9] text-[#2E7D32] text-xs font-bold px-3 py-1 rounded-full">
+          <span className="bg-[var(--color-secondary-50)] text-[var(--color-accent-secondary)] text-xs font-bold px-3 py-1 rounded-full">
             {t('catalog.new')}
           </span>
 
@@ -108,7 +108,7 @@ const VehicleDetailPage: React.FC = () => {
 
           <button
             onClick={() => navigate(`/simulador?vehicleId=${vehicle.id}`)}
-            className="w-full bg-[#1A237E] text-white py-3 rounded-xl text-base font-semibold mt-6 hover:bg-[#283593] transition-all duration-200"
+            className="w-full bg-[var(--color-accent-primary)] text-white py-3 rounded-xl text-base font-semibold mt-6 hover:bg-[var(--color-primary-800)] transition-all duration-300 hover:shadow-xl hover:scale-105 transform cursor-pointer"
           >
             {t('vehicle.simulatePayment')}
           </button>
@@ -119,7 +119,7 @@ const VehicleDetailPage: React.FC = () => {
               {specsList.map((spec) => (
                 <div key={spec.label} className="flex justify-between py-2 text-sm">
                   <span className="text-gray-400">{spec.label}</span>
-                  <span className="text-[#1A237E] font-medium text-right">{spec.value}</span>
+                  <span className="text-[var(--color-text-primary)] font-medium text-right">{spec.value}</span>
                 </div>
               ))}
             </div>

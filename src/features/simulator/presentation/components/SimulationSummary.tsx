@@ -32,8 +32,8 @@ const SimulationSummary: React.FC<SimulationSummaryProps> = ({
   const teaRange = getSuggestedTeaRange(input.financedAmount);
 
   return (
-    <div className="bg-white border border-gray-200 rounded-xl shadow-sm p-6">
-      <div className="bg-[#F5F5F5] rounded-xl p-4 text-center mb-4">
+    <div className="bg-[var(--color-bg-surface)] border border-gray-200 rounded-xl shadow-sm p-6">
+      <div className="bg-[var(--color-bg-page)] rounded-xl p-4 text-center mb-4">
         <p className="text-xs text-gray-500 uppercase tracking-wider mb-1">
           {t('simulator.estimatedMonthlyPayment')}
         </p>
@@ -63,7 +63,7 @@ const SimulationSummary: React.FC<SimulationSummaryProps> = ({
 
         <div className="flex justify-between items-center py-1.5">
           <span className="text-sm text-gray-500">{t('simulator.termLabel')}</span>
-          <span className="text-sm font-semibold text-[#1A237E]">
+          <span className="text-sm font-semibold text-[var(--color-text-primary)]">
             {input.termMonths} {t('simulator.months')}
           </span>
         </div>
@@ -71,7 +71,7 @@ const SimulationSummary: React.FC<SimulationSummaryProps> = ({
 
         <div className="flex justify-between items-center py-1.5">
           <span className="text-sm text-gray-500">{t('simulator.appliedTea')}</span>
-          <span className="text-sm font-semibold text-[#1A237E]">
+          <span className="text-sm font-semibold text-[var(--color-text-primary)]">
             {(input.tea * 100).toFixed(2)}%
           </span>
         </div>
@@ -81,7 +81,7 @@ const SimulationSummary: React.FC<SimulationSummaryProps> = ({
           <>
             <div className="flex justify-between items-center py-1.5">
               <span className="text-sm text-gray-500">{t('simulator.estimatedTcea')}</span>
-              <span className="text-sm font-semibold text-[#1A237E]">
+              <span className="text-sm font-semibold text-[var(--color-text-primary)]">
                 {(result.tcea * 100).toFixed(2)}%
               </span>
             </div>
@@ -90,9 +90,9 @@ const SimulationSummary: React.FC<SimulationSummaryProps> = ({
         )}
       </div>
 
-      <div className="bg-[#E8EAF6] rounded-lg p-3 flex gap-2 items-start mt-4">
-        <Info size={16} className="text-[#1A237E] flex-shrink-0 mt-0.5" />
-        <p className="text-xs text-[#1A237E]">
+      <div className="bg-[var(--color-primary-50)] rounded-lg p-3 flex gap-2 items-start mt-4">
+        <Info size={16} className="text-[var(--color-text-primary)] flex-shrink-0 mt-0.5" />
+        <p className="text-xs text-[var(--color-text-primary)]">
           {t('simulator.teaAlert', { amount: fmt(input.financedAmount), min: (teaRange.min * 100).toFixed(2), max: (teaRange.max * 100).toFixed(2) })}
         </p>
       </div>
@@ -106,7 +106,7 @@ const SimulationSummary: React.FC<SimulationSummaryProps> = ({
       <button
         onClick={onCalculate}
         disabled={isCalculating}
-        className="w-full bg-[#2E7D32] text-white py-4 rounded-xl text-base font-semibold hover:bg-[#388E3C] transition-colors duration-200 flex items-center justify-center gap-2 mt-4 disabled:opacity-60 disabled:cursor-not-allowed"
+        className="w-full bg-[var(--color-accent-secondary)] text-white py-4 rounded-xl text-base font-semibold hover:bg-[#388E3C] transition-all duration-300 hover:shadow-xl hover:scale-105 transform cursor-pointer flex items-center justify-center gap-2 mt-4 disabled:opacity-60 disabled:cursor-not-allowed"
       >
         {isCalculating ? (
           <>

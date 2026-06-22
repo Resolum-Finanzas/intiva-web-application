@@ -113,7 +113,7 @@ const SimulatorPage: React.FC = () => {
           </div>
 
           <div className="animate-slide-up" style={{ animationDelay: '0.1s' }}>
-            <div className="bg-white rounded-xl border border-gray-100 p-6">
+            <div className="bg-[var(--color-bg-surface)] rounded-xl border border-gray-100 p-6">
               <BasicDataForm
                 input={input}
                 onChange={handleChange}
@@ -123,7 +123,7 @@ const SimulatorPage: React.FC = () => {
           </div>
 
           <div className="animate-slide-up" style={{ animationDelay: '0.2s' }}>
-            <div className="bg-white rounded-xl border border-gray-100 p-6">
+            <div className="bg-[var(--color-bg-surface)] rounded-xl border border-gray-100 p-6">
               <AdvancedConfigForm
                 input={input}
                 onChange={handleChange}
