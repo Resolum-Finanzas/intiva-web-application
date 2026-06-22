@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom';
 import { Download, Plus, PauseCircle } from 'lucide-react';
 import { useI18n } from '../../../../core/i18n/useI18n';
 import PageContainer from '../../../../shared/presentation/components/pagecontainer/PageContainer.component';
@@ -23,6 +24,7 @@ const fmt = (n: number) => n.toLocaleString('en-US', { minimumFractionDigits: 2,
 
 const SchedulePage: React.FC = () => {
   const { t } = useI18n();
+  const navigate = useNavigate();
 
   const metricLabels = [
     t('schedule.tea'),
@@ -40,7 +42,7 @@ const SchedulePage: React.FC = () => {
             <Download size={16} />
             {t('common.exportPdf')}
           </button>
-          <button className="bg-primary text-white text-sm px-4 py-2 rounded-lg flex items-center gap-2 hover:opacity-90 transition-all duration-300 hover:shadow-xl hover:scale-105 transform cursor-pointer">
+          <button onClick={() => navigate('/simulator')} className="bg-primary text-white text-sm px-4 py-2 rounded-lg flex items-center gap-2 hover:opacity-90 transition-all duration-300 hover:shadow-xl hover:scale-105 transform cursor-pointer">
             <Plus size={16} />
             {t('common.newSimulation')}
           </button>

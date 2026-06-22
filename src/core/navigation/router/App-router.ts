@@ -16,6 +16,7 @@ const VehicleDetailPage = lazy(() => import('../../../features/catalog/presentat
 const SimulatorPage = lazy(() => import('../../../features/simulator/presentation/pages/SimulatorPage').then((m) => ({ default: m.default })));
 const SchedulePage = lazy(() => import('../../../features/simulator/presentation/pages/SchedulePage').then((m) => ({ default: m.default })));
 const SettingsPage = lazy(() => import('../../../features/settings/presentation/pages/SettingsPage').then((m) => ({ default: m.default })));
+const TeaRateConfig = lazy(() => import('../../../features/settings/presentation/pages/TeaRateConfig').then((m) => ({ default: m.default })));
 const ProfilePage = lazy(() => import('../../../features/profile/presentation/pages/ProfilePage').then((m) => ({ default: m.default })));
 
 const susp = (children: Parameters<typeof el>[2]) =>
@@ -129,6 +130,7 @@ export const appRoutes: RouteObject[] = [
       { path: 'simulador/history', element: susp(el('div', null, 'Historial de simulaciones')) },
       { path: 'profile', element: susp(el(ProfilePageWrapper)) },
       { path: 'settings', element: susp(el(SettingsPage)) },
+      { path: 'settings/tea/:type', element: susp(el(TeaRateConfig)) },
       { path: 'notifications', element: susp(el('div', null, 'Notificaciones')) },
       { path: 'notificaciones', element: susp(el('div', null, 'Notificaciones')) },
     ],

@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
   BaseConfigCard,
   LifeInsuranceTable,
@@ -15,6 +16,7 @@ import PageContainer from '../../../../shared/presentation/components/pagecontai
 
 const SettingsPage: React.FC = () => {
   const { t } = useI18n();
+  const navigate = useNavigate();
   const [baseConfig, setBaseConfig] = useState<BaseConfig | null>(null);
   const [lifeRates, setLifeRates] = useState<LifeInsuranceRate[]>([]);
   const [teaEntries] = useState<TeaMatrixEntry[]>(() =>
@@ -73,7 +75,7 @@ const SettingsPage: React.FC = () => {
         <div className="animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
           <TeaMatrixCard
             entries={teaEntries}
-            onNavigate={(route) => console.log('Navigate to:', route)}
+            onNavigate={(route) => navigate(route)}
           />
         </div>
         <div className="animate-fade-in-up" style={{ animationDelay: '0.3s' }}>

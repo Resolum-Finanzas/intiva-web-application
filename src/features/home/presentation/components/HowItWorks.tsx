@@ -1,8 +1,10 @@
+import { useNavigate } from 'react-router-dom';
 import { useI18n } from '../../../../core/i18n/useI18n';
 import { Calculator } from 'lucide-react';
 
 const HowItWorks: React.FC = () => {
   const { t } = useI18n();
+  const navigate = useNavigate();
   const steps = [
     { number: 1, title: t('home.step1Title'), description: t('home.step1Desc'), active: true },
     { number: 2, title: t('home.step2Title'), description: t('home.step2Desc'), active: false },
@@ -32,7 +34,7 @@ const HowItWorks: React.FC = () => {
       </div>
       <div className="flex justify-center mt-8">
         <button
-          onClick={() => {/* navigate to simulator */ }}
+          onClick={() => navigate('/simulator')}
           className="inline-flex items-center gap-2 bg-primary text-white px-6 py-2.5 rounded-full text-sm font-semibold hover:shadow-xl hover:opacity-90 hover:scale-105 active:scale-95 transition-all duration-300 transform cursor-pointer"
         >
           <Calculator size={16} className="transition-transform duration-300 group-hover:rotate-12" />

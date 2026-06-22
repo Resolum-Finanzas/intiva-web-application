@@ -1,6 +1,11 @@
 import { TrendingUp, ChevronRight, Car, Truck } from 'lucide-react';
-import type { TeaMatrixEntry } from '../../domain/models/teaMatrix';
+import type { TeaMatrixEntry, VehicleType } from '../../domain/models/teaMatrix';
 import { useI18n } from '../../../../core/i18n/useI18n';
+
+const VEHICLE_I18N_KEY: Record<VehicleType, string> = {
+  Ligeros: 'settings.lightVehicles',
+  Comerciales: 'settings.commercialVehicles',
+};
 
 interface TeaMatrixCardProps {
   entries: TeaMatrixEntry[];
@@ -28,6 +33,7 @@ const TeaMatrixCard: React.FC<TeaMatrixCardProps> = ({ entries, onNavigate }) =>
       <div className="space-y-2">
         {entries.map((entry) => {
           const Icon = iconMap[entry.icon] || Car;
+          const labelKey = VEHICLE_I18N_KEY[entry.vehicleType];
           return (
             <button
               key={entry.vehicleType}
@@ -36,7 +42,7 @@ const TeaMatrixCard: React.FC<TeaMatrixCardProps> = ({ entries, onNavigate }) =>
             >
               <div className="flex items-center gap-3">
                 <Icon size={16} className="text-[var(--color-text-primary)]" />
-                <span className="text-sm font-medium text-gray-700">{entry.label}</span>
+                <span className="text-sm font-medium text-gray-700">{labelKey ? t(labelKey) : entry.label}</span>
               </div>
               <ChevronRight size={16} className="text-gray-400" />
             </button>
