@@ -8,7 +8,7 @@ const tokenStorage = new TokenStorage();
 
 export const authRepositoryImpl: AuthRepository = {
   async login(username: string, password: string): Promise<User> {
-    const res = await login({ username, password });
+    const res = await login({ email: username, password });
     currentUser = {
       id: res.user.id,
       name: res.user.name,
@@ -19,11 +19,14 @@ export const authRepositoryImpl: AuthRepository = {
   },
 
   async register(fullName: string, email: string, password: string): Promise<User> {
-    const res = await register({ fullName, email, password });
+    if (!password) {
+      throw new Error('La contraseña es requerida');
+    }
+    const res = await register();
     currentUser = {
       id: res.user.id,
-      name: res.user.name,
-      email: res.user.email,
+      name: fullName,
+      email: email,
       memberId: `INT-${res.user.id.slice(-5)}`,
     };
     return currentUser;

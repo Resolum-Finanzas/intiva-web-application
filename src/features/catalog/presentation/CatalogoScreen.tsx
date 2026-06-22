@@ -9,10 +9,10 @@ const CatalogoScreen: React.FC = () => {
 
   return (
     <div className="p-6 space-y-4">
-      <CatalogHeader />
-      <VehicleSearchBar />
-      <CategoryFilter categories={[]} selectedCategory={null} onChange={() => {}} />
-      <VehicleList vehicles={vehicles} onViewDetails={() => {}} />
+      <CatalogHeader title="Catálogo" subtitle="Vehículos disponibles" />
+      <VehicleSearchBar onSearch={(query) => console.log(query)} />
+      <CategoryFilter active="Todos" onChange={(category) => console.log(category)} />
+      <VehicleList vehicles={vehicles} onViewDetails={(id) => console.log(id)} />
     </div>
   );
 };

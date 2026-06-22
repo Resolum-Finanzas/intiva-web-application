@@ -1,4 +1,4 @@
-import type { LoginDto, RegisterDto, AuthResponseDto } from '../models/authDto';
+import type { LoginDto, AuthResponseDto } from '../models/authDto';
 
 function delay(ms: number): Promise<void> {
   return new Promise((resolve) => setTimeout(resolve, ms));
@@ -18,13 +18,13 @@ const HARDCODED_PASSWORD = 'admin123';
 
 export async function login(body: LoginDto): Promise<AuthResponseDto> {
   await delay(800);
-  if (body.username !== HARDCODED_EMAIL || body.password !== HARDCODED_PASSWORD) {
+  if (body.email !== HARDCODED_EMAIL || body.password !== HARDCODED_PASSWORD) {
     throw new Error('Credenciales inválidas');
   }
   return mockResponse;
 }
 
-export async function register(_body: RegisterDto): Promise<AuthResponseDto> {
+export async function register(): Promise<AuthResponseDto> {
   await delay(800);
   return mockResponse;
 }
