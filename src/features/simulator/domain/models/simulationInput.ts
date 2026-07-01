@@ -10,7 +10,7 @@ export interface SimulationInput {
   downPaymentAmount: number;
   financedAmount: number;
   tea: number;
-  bank: 'BCP' | 'BBVA' | 'Interbank';
+  bank: 'BCP';
 
   termMonths: number;
   paymentFrequency: 'Mensual';

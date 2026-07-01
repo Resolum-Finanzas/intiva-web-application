@@ -1,11 +1,11 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import CatalogHeader from '../components/CatalogHeader';
 import CategoryFilter from '../components/CategoryFilter';
 import VehicleList from '../components/VehicleList';
 import VehicleSearchBar from '../components/VehicleSearchBar';
 import { vehicleRepositoryImpl } from '../../data/repositories/vehicleRepositoryImpl';
-import type { VehicleCategory } from '../../domain/models/vehicle';
+import type { Vehicle, VehicleCategory } from '../../domain/models/vehicle';
 import { useI18n } from '../../../../core/i18n/useI18n';
 import PageContainer from '../../../../shared/presentation/components/pagecontainer/PageContainer.component';
 
@@ -21,10 +21,13 @@ const normalizeCategory = (cat: string): VehicleCategory | undefined => {
 const CatalogPage: React.FC = () => {
   const { t } = useI18n();
   const navigate = useNavigate();
+  const [allVehicles, setAllVehicles] = useState<Vehicle[]>([]);
   const [activeCategory, setActiveCategory] = useState(t('catalog.all'));
   const [searchQuery, setSearchQuery] = useState('');
 
-  const allVehicles = vehicleRepositoryImpl.getAll();
+  useEffect(() => {
+    vehicleRepositoryImpl.getAll().then(setAllVehicles);
+  }, []);
 
   const filtered = allVehicles.filter((v) => {
     const matchesCategory =

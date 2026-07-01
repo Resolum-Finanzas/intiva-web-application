@@ -1,32 +1,29 @@
-import type { PriceDto } from './priceDto';
-
-export type VehicleCategoryDto = 'SUV' | 'Sedan' | 'Electrico' | 'Hibrido';
-export type VehicleBadgeDto = 'Hybrid' | 'Premium' | '100% Electric';
-
 export interface VehicleSpecsDto {
-  transmission: string;
-  engine: string;
-  horsepower?: string;
-  torque?: string;
-  drivetrain?: string;
-  fuelEconomy?: string;
-  autonomy?: string;
-  acceleration?: string;
-  passengers?: number;
+  combined_consumption?: string;
+  comfort?: string;
+  engine_power?: string;
   safety?: string;
 }
 
 export interface VehicleDto {
-  id: string;
-  name: string;
+  id: number;
+  make: string;
+  model: string;
+  version: string;
   year: number;
-  variant: string;
-  category: VehicleCategoryDto;
-  badge: VehicleBadgeDto | null;
-  price: PriceDto;
-  imageUrl: string;
+  price: number;
+  reference_price: number;
+  residual_value: number;
+  photo_url: string;
+  fuel_type: string;
+  transmission: string;
+  drivetrain: string;
+  mileage: number;
+  condition: string;
+  vehicle_type: string;
+  color_aesthetics: string;
+  interest_rate: string;
+  risk_category: string;
+  vehicle_insurance: unknown;
   specs: VehicleSpecsDto;
-  description: string;
-  images: string[];
-  location: string;
 }

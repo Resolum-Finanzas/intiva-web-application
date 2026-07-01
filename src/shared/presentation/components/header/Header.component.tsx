@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Search } from 'lucide-react';
+import { Search, LogOut } from 'lucide-react';
 import { LanguageSwitcher } from '../i18n/LanguageSwitcher';
 import { ThemeToggle } from '../theme/ThemeToggle';
 
@@ -9,12 +9,13 @@ interface HeaderProps {
     email: string;
   };
   onSearch?: (query: string) => void;
+  onLogout?: () => void;
 }
 
 const getInitials = (name: string): string =>
   name.split(' ').map((n) => n[0]).join('').toUpperCase().slice(0, 2);
 
-const Header: React.FC<HeaderProps> = ({ user, onSearch }) => {
+const Header: React.FC<HeaderProps> = ({ user, onSearch, onLogout }) => {
   const [query, setQuery] = useState('');
 
   return (
@@ -36,6 +37,13 @@ const Header: React.FC<HeaderProps> = ({ user, onSearch }) => {
       <div className="flex items-center gap-4">
         <LanguageSwitcher />
         <ThemeToggle />
+        <button
+          onClick={onLogout}
+          title="Cerrar sesión"
+          className="w-9 h-9 rounded-full bg-[var(--color-accent-primary)] flex items-center justify-center text-[var(--color-text-on-primary)] hover:ring-2 hover:ring-red-400 transition-all duration-200 shrink-0"
+        >
+          <LogOut size={16} />
+        </button>
         <div className="w-9 h-9 rounded-full bg-[var(--color-accent-primary)] flex items-center justify-center text-[var(--color-text-on-primary)] text-sm font-bold cursor-pointer hover:ring-2 hover:ring-[var(--color-accent-secondary)] transition-all duration-200 shrink-0">
           {getInitials(user.name)}
         </div>

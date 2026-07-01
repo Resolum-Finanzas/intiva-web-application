@@ -42,8 +42,7 @@ const navItems: NavItem[] = [
       { label: 'Schedule', icon: Calendar },
     ],
   },
-  { label: 'Settings', icon: Settings },
-  { label: 'Profile', icon: User },
+  { label: 'Settings', icon: Settings }
 ];
 
 const getInitials = (name: string): string =>

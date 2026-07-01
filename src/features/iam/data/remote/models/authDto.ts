@@ -1,21 +1,16 @@
 export interface LoginDto {
-  email: string;
+  username: string;
   password: string;
 }
 
 export interface RegisterDto {
-  fullName: string;
-  email: string;
+  username: string;
   password: string;
 }
 
-export interface UserDto {
-  id: string;
-  name: string;
-  email: string;
-}
-
 export interface AuthResponseDto {
+  id: number;
+  username: string;
+  roles: string[];
   token: string;
-  user: UserDto;
 }

@@ -1,30 +1,35 @@
-import type { LoginDto, AuthResponseDto } from '../models/authDto';
+import type { LoginDto, RegisterDto, AuthResponseDto } from '../models/authDto';
 
-function delay(ms: number): Promise<void> {
-  return new Promise((resolve) => setTimeout(resolve, ms));
-}
-
-const mockResponse: AuthResponseDto = {
-  token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.mock',
-  user: {
-    id: 'usr_001',
-    name: 'Juan Pérez',
-    email: 'juan.perez@email.com',
-  },
-};
-
-const HARDCODED_EMAIL = 'admin@intiva.com';
-const HARDCODED_PASSWORD = 'admin123';
+const BASE_URL = import.meta.env.VITE_API_BASE_URL ?? '';
+const SIGN_IN_PATH = import.meta.env.VITE_AUTH_SIGN_IN ?? '/api/v1/auth/sign-in';
+const SIGN_UP_PATH = import.meta.env.VITE_AUTH_SIGN_UP ?? '/api/v1/auth/sign-up';
 
 export async function login(body: LoginDto): Promise<AuthResponseDto> {
-  await delay(800);
-  if (body.email !== HARDCODED_EMAIL || body.password !== HARDCODED_PASSWORD) {
-    throw new Error('Credenciales inválidas');
+  const response = await fetch(`${BASE_URL}${SIGN_IN_PATH}`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(body),
+  });
+
+  if (!response.ok) {
+    const error = await response.json().catch(() => ({ error: 'Invalid credentials' }));
+    throw new Error(error.error ?? `HTTP ${response.status}`);
   }
-  return mockResponse;
+
+  return response.json();
 }
 
-export async function register(): Promise<AuthResponseDto> {
-  await delay(800);
-  return mockResponse;
+export async function register(body: RegisterDto): Promise<AuthResponseDto> {
+  const response = await fetch(`${BASE_URL}${SIGN_UP_PATH}`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(body),
+  });
+
+  if (!response.ok) {
+    const error = await response.json().catch(() => ({ error: 'Registration failed' }));
+    throw new Error(error.error ?? `HTTP ${response.status}`);
+  }
+
+  return response.json();
 }
