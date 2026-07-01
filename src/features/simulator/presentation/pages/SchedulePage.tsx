@@ -1,6 +1,6 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Download, Plus, PauseCircle } from 'lucide-react';
+import { Download, Plus, PauseCircle, FileText, ArrowRight } from 'lucide-react';
 import { useI18n } from '../../../../core/i18n/useI18n';
 import { getLastSimulation } from '../../data/remote/services/simulatorService';
 import type { SimulationResult } from '../../domain/models/simulationResult';
@@ -11,24 +11,39 @@ const fmt = (n: number) => n.toLocaleString('en-US', { minimumFractionDigits: 2,
 const SchedulePage: React.FC = () => {
   const { t } = useI18n();
   const navigate = useNavigate();
-  const [result, setResult] = useState<SimulationResult | null>(null);
-
-  useEffect(() => {
-    const last = getLastSimulation();
-    if (last) setResult(last);
-  }, []);
+  const [result, setResult] = useState<SimulationResult | null>(() => getLastSimulation());
 
   if (!result) {
     return (
       <PageContainer>
-        <div className="flex flex-col items-center justify-center min-h-[60vh] text-center">
-          <p className="text-gray-500 text-lg mb-4">No hay simulación guardada.</p>
-          <button
-            onClick={() => navigate('/simulator')}
-            className="bg-primary text-white px-6 py-3 rounded-lg font-semibold hover:opacity-90 transition-all"
-          >
-            Realizar simulación
-          </button>
+        <div className="flex flex-col items-center justify-center min-h-[70vh] px-4 animate-fade-in">
+          <div className="max-w-md w-full bg-[var(--color-bg-surface)] border border-[var(--color-border)] rounded-2xl p-8 shadow-lg flex flex-col items-center text-center relative overflow-hidden transition-all duration-300 hover:shadow-xl group">
+            {/* Decorative background glow */}
+            <div className="absolute -top-10 -right-10 w-32 h-32 bg-[var(--color-accent-primary)]/5 rounded-full blur-2xl pointer-events-none" />
+            <div className="absolute -bottom-10 -left-10 w-32 h-32 bg-[var(--color-accent-secondary)]/5 rounded-full blur-2xl pointer-events-none" />
+
+            {/* Icon Container with elegant gradient and hover animation */}
+            <div className="w-16 h-16 rounded-2xl bg-[var(--color-bg-icon-active)] text-[var(--color-text-primary)] flex items-center justify-center mb-6 shadow-xs transition-transform duration-300 group-hover:scale-110">
+              <FileText size={32} className="text-[var(--color-text-primary)] animate-pulse-soft" />
+            </div>
+
+            {/* Title & Description */}
+            <h2 className="text-xl font-extrabold text-[var(--color-text-dark)] mb-2">
+              {t('schedule.emptyTitle')}
+            </h2>
+            <p className="text-sm text-[var(--color-text-muted)] leading-relaxed mb-8">
+              {t('schedule.emptyDesc')}
+            </p>
+
+            {/* Premium CTA Button */}
+            <button
+              onClick={() => navigate('/simulator')}
+              className="w-full inline-flex items-center justify-center gap-2 bg-primary hover:bg-primary-600 text-white px-6 py-3.5 rounded-xl font-bold hover:shadow-lg hover:opacity-95 hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 cursor-pointer shadow-sm group/btn"
+            >
+              <span>{t('schedule.startSimulationCta')}</span>
+              <ArrowRight size={16} className="transition-transform duration-300 group-hover/btn:translate-x-1" />
+            </button>
+          </div>
         </div>
       </PageContainer>
     );
@@ -39,8 +54,8 @@ const SchedulePage: React.FC = () => {
   const metrics = [
     { label: 'TEA (TASA EFECTIVA ANUAL)', value: `${(tea * 100).toFixed(2)}%` },
     { label: 'TCEA', value: `${(tcea * 100).toFixed(2)}%` },
-    { label: 'INTERÉS DE GRACIA', value: `S/ ${fmt(graceInterest)}` },
-    { label: 'VAN / TIR', value: `S/ ${fmt(van)} / ${(tir * 100).toFixed(2)}%` },
+    { label: 'INTERÉS DE GRACIA', value: `$ ${fmt(graceInterest)}` },
+    { label: 'VAN / TIR', value: `$ ${fmt(van)} / ${(tir * 100).toFixed(2)}%` },
   ];
 
   const totalRow = {
@@ -114,26 +129,26 @@ const SchedulePage: React.FC = () => {
                     </div>
                   </td>
                   <td className="px-4 py-3">{r.date}</td>
-                  <td className="px-4 py-3">S/ {fmt(r.initialBalance)}</td>
-                  <td className="px-4 py-3">S/ {fmt(r.interest)}</td>
-                  <td className="px-4 py-3">{isGracia ? '0.00' : `S/ ${fmt(r.amortization)}`}</td>
-                  <td className="px-4 py-3">S/ {fmt(r.lifeInsurance)}</td>
-                  <td className="px-4 py-3">S/ {fmt(r.vehicleInsurance)}</td>
-                  <td className="px-4 py-3">S/ {fmt(r.totalPayment)}</td>
-                  <td className="px-4 py-3">S/ {fmt(r.finalBalance)}</td>
+                  <td className="px-4 py-3">$ {fmt(r.initialBalance)}</td>
+                  <td className="px-4 py-3">$ {fmt(r.interest)}</td>
+                  <td className="px-4 py-3">{isGracia ? '0.00' : `$ ${fmt(r.amortization)}`}</td>
+                  <td className="px-4 py-3">$ {fmt(r.lifeInsurance)}</td>
+                  <td className="px-4 py-3">$ {fmt(r.vehicleInsurance)}</td>
+                  <td className="px-4 py-3">$ {fmt(r.totalPayment)}</td>
+                  <td className="px-4 py-3">$ {fmt(r.finalBalance)}</td>
                 </tr>
               );
             })}
 
             <tr className="bg-primary text-white font-bold">
               <td className="px-4 py-3" colSpan={2}>{t('schedule.totals')}</td>
-              <td className="px-4 py-3">S/ {fmt(totalRow.saldoInicial)}</td>
-              <td className="px-4 py-3">S/ {fmt(totalRow.interes)}</td>
-              <td className="px-4 py-3">S/ {fmt(totalRow.amortizacion)}</td>
-              <td className="px-4 py-3">S/ {fmt(totalRow.desgravamen)}</td>
-              <td className="px-4 py-3">S/ {fmt(totalRow.segVehicular)}</td>
+              <td className="px-4 py-3">$ {fmt(totalRow.saldoInicial)}</td>
+              <td className="px-4 py-3">$ {fmt(totalRow.interes)}</td>
+              <td className="px-4 py-3">$ {fmt(totalRow.amortizacion)}</td>
+              <td className="px-4 py-3">$ {fmt(totalRow.desgravamen)}</td>
+              <td className="px-4 py-3">$ {fmt(totalRow.segVehicular)}</td>
               <td className="px-4 py-3" />
-              <td className="px-4 py-3 text-xl">S/ {fmt(totalRow.saldoFinal)}</td>
+              <td className="px-4 py-3 text-xl">$ {fmt(totalRow.saldoFinal)}</td>
             </tr>
           </tbody>
         </table>

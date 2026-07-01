@@ -2,12 +2,14 @@ import { createElement, lazy, Suspense, useEffect, useState } from 'react';
 import type { FC } from 'react';
 import type { RouteObject } from 'react-router-dom';
 import { createBrowserRouter, Navigate, Outlet, useLocation, useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import Layout from '../../../shared/presentation/components/layout/Layout.component';
 import { requireAuthGuard } from './Auth.guard';
 import { RouteNames } from './Router-name';
 import LoginForm from '../../../features/iam/presentation/components/LoginForm';
 import RegisterForm from '../../../features/iam/presentation/components/RegisterForm';
 import type { User } from '../../../features/iam/domain/models/user';
+import { AuthError } from '../../../features/iam/data/remote/services/authService';
 
 const el = createElement;
 
@@ -16,8 +18,6 @@ const CatalogPage = lazy(() => import('../../../features/catalog/presentation/pa
 const VehicleDetailPage = lazy(() => import('../../../features/catalog/presentation/pages/VehicleDetailPage').then((m) => ({ default: m.default })));
 const SimulatorPage = lazy(() => import('../../../features/simulator/presentation/pages/SimulatorPage').then((m) => ({ default: m.default })));
 const SchedulePage = lazy(() => import('../../../features/simulator/presentation/pages/SchedulePage').then((m) => ({ default: m.default })));
-const SettingsPage = lazy(() => import('../../../features/settings/presentation/pages/SettingsPage').then((m) => ({ default: m.default })));
-const TeaRateConfig = lazy(() => import('../../../features/settings/presentation/pages/TeaRateConfig').then((m) => ({ default: m.default })));
 
 const susp = (children: Parameters<typeof el>[2]) =>
   el(Suspense, { fallback: el('div', { className: 'flex items-center justify-center min-h-screen' }, 'Cargando...') }, children);
@@ -75,6 +75,7 @@ const AppLayout: FC = () => {
 
 const SignInPage: FC = () => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   return el(LoginForm, {
@@ -88,7 +89,11 @@ const SignInPage: FC = () => {
         await authRepositoryImpl.login(email, password);
         navigate(RouteNames.home);
       } catch (err) {
-        setError(err instanceof Error ? err.message : 'Error al iniciar sesión');
+        if (err instanceof AuthError) {
+          setError(err.serverMessage ?? t(`auth.errors.${err.code}`));
+        } else {
+          setError(t('auth.errors.unknownError'));
+        }
       } finally {
         setLoading(false);
       }
@@ -138,8 +143,7 @@ export const appRoutes: RouteObject[] = [
       { path: 'simulador/schedule', element: susp(el(SchedulePage)) },
       { path: 'simulator/history', element: susp(el('div', null, 'Historial de simulaciones')) },
       { path: 'simulador/history', element: susp(el('div', null, 'Historial de simulaciones')) },
-      { path: 'settings', element: susp(el(SettingsPage)) },
-      { path: 'settings/tea/:type', element: susp(el(TeaRateConfig)) },
+
       { path: 'notifications', element: susp(el('div', null, 'Notificaciones')) },
       { path: 'notificaciones', element: susp(el('div', null, 'Notificaciones')) },
     ],

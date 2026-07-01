@@ -55,8 +55,8 @@
     "step1Desc": "Explore our catalog and select the ideal vehicle for you.",
     "step2Title": "Configure your credit",
     "step2Desc": "Use the simulator to adjust payments and terms according to your budget.",
-    "step3Title": "Approval",
-    "step3Desc": "Complete your data and get immediate response on your credit.",
+    "step3Title": "Review your payment plan",
+    "step3Desc": "Analyze the detailed schedule of your installments, interest, and insurance.",
     "step4Title": "Drive!",
     "step4Desc": "Sign the documents and receive the keys to your new car.",
     "howItWorksTitle": "How It Works"
@@ -129,6 +129,8 @@
     "months": "months",
     "paymentFrequency": "Payment Frequency",
     "monthly": "Monthly",
+    "quarterly": "Quarterly",
+    "semiAnnually": "Semi-annually",
     "vehicleInsurance": "Vehicle Insurance",
     "vehicleInsuranceDesc": "Include insurance in credit installments",
     "lifeInsurance": "Life Insurance (Desgravamen)",
@@ -151,6 +153,7 @@
     "newSimulation": "New Simulation",
     "validationDownPayment": "The down payment must be at least 10%",
     "validationTea": "TEA must be a value between 0% and 100%",
+    "validationTeaRange": "The TEA must be within the suggested range for your amount: {{min}}% - {{max}}%",
     "validationTerm": "The term must be greater than 0 months",
     "validationGracePeriod": "The grace period must be less than the total term",
     "results": "Simulation Results",
@@ -194,10 +197,19 @@
     "registerHeroDesc": "Register your data, compare credit options and build a reliable history for your next car.",
     "acceptTermsError": "You must accept the terms and privacy policy.",
     "passwordsMustMatch": "Passwords must match.",
-    "invalidCredentials": "Invalid credentials",
+    "invalidCredentials": "Incorrect email or password",
     "loginError": "Error signing in",
     "continueWithGoogle": "Continue with Google",
-    "or": "or"
+    "or": "or",
+    "errors": {
+      "invalidCredentials": "The email or password you entered is incorrect. Please check your credentials and try again.",
+      "unauthorized": "Unauthorized. Please sign in to continue.",
+      "forbidden": "You do not have permission to perform this action.",
+      "notFound": "Service not available. Please try again later.",
+      "invalidData": "The provided data is not valid. Please review the fields and try again.",
+      "serverError": "Server error. Please try again later.",
+      "unknownError": "An unexpected error occurred. Please try again."
+    }
   },
   "validation": {
     "required": "This field is required",
@@ -302,6 +314,9 @@
   },
   "schedule": {
     "title": "Payment Schedule",
+    "emptyTitle": "No active simulation",
+    "emptyDesc": "You haven't configured a vehicle credit simulation yet. Run a simulation in minutes to visualize your payment schedule, detailed amortizations, interest, and insurance.",
+    "startSimulationCta": "Perform simulation",
     "totals": "TOTALS",
     "installment": "N°",
     "date": "DATE",

@@ -9,7 +9,7 @@ interface AdvancedConfigFormProps {
   onChange: (field: keyof SimulationInput, value: unknown) => void;
 }
 
-const TERM_OPTIONS = [24, 36, 48, 60];
+const TERM_OPTIONS = [24, 36];
 
 const AdvancedConfigForm: React.FC<AdvancedConfigFormProps> = ({ input, onChange }) => {
   const { t } = useI18n();
@@ -49,10 +49,12 @@ const AdvancedConfigForm: React.FC<AdvancedConfigFormProps> = ({ input, onChange
             </label>
             <select
               value={input.paymentFrequency}
-              disabled
-              className="w-full border border-gray-200 rounded-lg px-4 py-3 text-sm bg-gray-50 text-gray-500 cursor-not-allowed"
+              onChange={(e) => onChange('paymentFrequency', e.target.value as 'Mensual' | 'Trimestral' | 'Semestral')}
+              className="w-full border border-gray-200 rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-accent-primary)] bg-[var(--color-bg-surface)]"
             >
               <option value="Mensual">{t('simulator.monthly')}</option>
+              <option value="Trimestral">{t('simulator.quarterly')}</option>
+              <option value="Semestral">{t('simulator.semiAnnually')}</option>
             </select>
           </div>
         </div>

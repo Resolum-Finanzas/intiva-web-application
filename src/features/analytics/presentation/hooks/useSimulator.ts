@@ -37,7 +37,8 @@ export function useSimulator() {
       const simResult = await calculateLoan(params);
       setResult(simResult);
       setSaved(false);
-    } catch {
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Error al calcular la simulación');
       const fallback = simulateCredito(params);
       setResult(fallback);
     } finally {
@@ -57,6 +58,7 @@ export function useSimulator() {
     result,
     saved,
     calculating,
+    error,
     setSaved,
     updateParam,
     calculate,
