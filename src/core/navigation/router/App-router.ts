@@ -1,4 +1,4 @@
-import { createElement, lazy, Suspense, useState } from 'react';
+import { createElement, lazy, Suspense, useEffect, useState } from 'react';
 import type { FC } from 'react';
 import type { RouteObject } from 'react-router-dom';
 import { createBrowserRouter, Navigate, Outlet, useLocation, useNavigate } from 'react-router-dom';
@@ -7,6 +7,7 @@ import { requireAuthGuard } from './Auth.guard';
 import { RouteNames } from './Router-name';
 import LoginForm from '../../../features/iam/presentation/components/LoginForm';
 import RegisterForm from '../../../features/iam/presentation/components/RegisterForm';
+import type { User } from '../../../features/iam/domain/models/user';
 
 const el = createElement;
 
@@ -17,7 +18,6 @@ const SimulatorPage = lazy(() => import('../../../features/simulator/presentatio
 const SchedulePage = lazy(() => import('../../../features/simulator/presentation/pages/SchedulePage').then((m) => ({ default: m.default })));
 const SettingsPage = lazy(() => import('../../../features/settings/presentation/pages/SettingsPage').then((m) => ({ default: m.default })));
 const TeaRateConfig = lazy(() => import('../../../features/settings/presentation/pages/TeaRateConfig').then((m) => ({ default: m.default })));
-const ProfilePage = lazy(() => import('../../../features/profile/presentation/pages/ProfilePage').then((m) => ({ default: m.default })));
 
 const susp = (children: Parameters<typeof el>[2]) =>
   el(Suspense, { fallback: el('div', { className: 'flex items-center justify-center min-h-screen' }, 'Cargando...') }, children);
@@ -46,27 +46,32 @@ const getRouteForItem = (item: string): string => navigationRoutes[item] ?? Rout
 const AppLayout: FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const [user, setUser] = useState<User | null>(null);
+
+  useEffect(() => {
+    (async () => {
+      const { authRepositoryImpl } = await import('../../../features/iam/data/repositories/authRepositoryImpl');
+      setUser(authRepositoryImpl.getCurrentUser());
+    })();
+  }, []);
+
+  const handleLogout = async () => {
+    const { authRepositoryImpl } = await import('../../../features/iam/data/repositories/authRepositoryImpl');
+    await authRepositoryImpl.logout();
+    navigate(RouteNames.signIn);
+  };
 
   return el(Layout, {
     activeItem: getActiveItem(location.pathname),
     onNavigate: (item: string) => {
       navigate(getRouteForItem(item));
     },
-    user: { name: 'Juan Pérez', email: 'juan.perez@email.com' },
+    user: user ?? { name: 'Usuario', email: '' },
+    onLogout: handleLogout,
     children: el(Outlet),
   });
 };
 
-const ProfilePageWrapper: FC = () => {
-  const navigate = useNavigate();
-  return el(ProfilePage, {
-    onLogout: async () => {
-      const { authRepositoryImpl } = await import('../../../features/iam/data/repositories/authRepositoryImpl');
-      await authRepositoryImpl.logout();
-      navigate(RouteNames.signIn);
-    },
-  });
-};
 
 const SignInPage: FC = () => {
   const navigate = useNavigate();
@@ -79,11 +84,8 @@ const SignInPage: FC = () => {
       setError('');
       setLoading(true);
       try {
-        const { TokenStorage } = await import('../../storage/Token-storage');
         const { authRepositoryImpl } = await import('../../../features/iam/data/repositories/authRepositoryImpl');
-        const user = await authRepositoryImpl.login(email, password);
-        const tokenStorage = new TokenStorage();
-        await tokenStorage.save(user.id);
+        await authRepositoryImpl.login(email, password);
         navigate(RouteNames.home);
       } catch (err) {
         setError(err instanceof Error ? err.message : 'Error al iniciar sesión');
@@ -98,7 +100,15 @@ const SignInPage: FC = () => {
 const SignUpPage: FC = () => {
   const navigate = useNavigate();
   return el(RegisterForm, {
-    onRegister: () => navigate(RouteNames.signIn),
+    onRegister: async (data: { fullName: string; email: string; password: string }) => {
+      try {
+        const { authRepositoryImpl } = await import('../../../features/iam/data/repositories/authRepositoryImpl');
+        await authRepositoryImpl.register(data.fullName, data.email, data.password);
+        navigate(RouteNames.signIn);
+      } catch {
+        navigate(RouteNames.signIn);
+      }
+    },
     onGoLogin: () => navigate(RouteNames.signIn),
   });
 };
@@ -128,7 +138,6 @@ export const appRoutes: RouteObject[] = [
       { path: 'simulador/schedule', element: susp(el(SchedulePage)) },
       { path: 'simulator/history', element: susp(el('div', null, 'Historial de simulaciones')) },
       { path: 'simulador/history', element: susp(el('div', null, 'Historial de simulaciones')) },
-      { path: 'profile', element: susp(el(ProfilePageWrapper)) },
       { path: 'settings', element: susp(el(SettingsPage)) },
       { path: 'settings/tea/:type', element: susp(el(TeaRateConfig)) },
       { path: 'notifications', element: susp(el('div', null, 'Notificaciones')) },

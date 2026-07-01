@@ -1,30 +1,56 @@
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Download, Plus, PauseCircle } from 'lucide-react';
 import { useI18n } from '../../../../core/i18n/useI18n';
+import { getLastSimulation } from '../../data/remote/services/simulatorService';
+import type { SimulationResult } from '../../domain/models/simulationResult';
 import PageContainer from '../../../../shared/presentation/components/pagecontainer/PageContainer.component';
-
-const metrics = [
-  { label: 'TEA (TASA EFECTIVA ANUAL)', value: '12.50%' },
-  { label: 'TCEA', value: '14.20%' },
-  { label: 'INTERÉS DE GRACIA', value: 'S/ 450.00' },
-  { label: 'VAN / TIR', value: 'S/ 1,200 / 15%' },
-];
-
-const rows = [
-  { num: 0, fecha: '15/04/2024', saldoInicial: 65000, interes: 677.08, amortizacion: 0, desgravamen: 36.40, segVehicular: 85, cuotaTotal: 798.48, saldoFinal: 65000, gracia: true },
-  { num: 1, fecha: '15/05/2024', saldoInicial: 65000, interes: 677.08, amortizacion: 1217.38, desgravamen: 36.40, segVehicular: 85, cuotaTotal: 2015.86, saldoFinal: 63782.62 },
-  { num: 2, fecha: '15/06/2024', saldoInicial: 63782.62, interes: 664.40, amortizacion: 1230.06, desgravamen: 35.72, segVehicular: 85, cuotaTotal: 2015.18, saldoFinal: 62552.56 },
-  { num: 3, fecha: '15/07/2024', saldoInicial: 62552.56, interes: 651.59, amortizacion: 1242.87, desgravamen: 35.03, segVehicular: 85, cuotaTotal: 2014.49, saldoFinal: 61309.69 },
-  { num: 4, fecha: '15/08/2024', saldoInicial: 61309.69, interes: 638.64, amortizacion: 1255.82, desgravamen: 34.33, segVehicular: 85, cuotaTotal: 2013.79, saldoFinal: 60053.87, balon: true },
-];
-
-const totalRow = { num: 0, fecha: 'TOTALES', saldoInicial: 65000, interes: 2708.71, amortizacion: 4946.13, desgravamen: 177.88, segVehicular: 425, cuotaTotal: 0, saldoFinal: 66480.77 };
 
 const fmt = (n: number) => n.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 
 const SchedulePage: React.FC = () => {
   const { t } = useI18n();
   const navigate = useNavigate();
+  const [result, setResult] = useState<SimulationResult | null>(null);
+
+  useEffect(() => {
+    const last = getLastSimulation();
+    if (last) setResult(last);
+  }, []);
+
+  if (!result) {
+    return (
+      <PageContainer>
+        <div className="flex flex-col items-center justify-center min-h-[60vh] text-center">
+          <p className="text-gray-500 text-lg mb-4">No hay simulación guardada.</p>
+          <button
+            onClick={() => navigate('/simulator')}
+            className="bg-primary text-white px-6 py-3 rounded-lg font-semibold hover:opacity-90 transition-all"
+          >
+            Realizar simulación
+          </button>
+        </div>
+      </PageContainer>
+    );
+  }
+
+  const { rows, tea, tcea, graceInterest, van, tir } = result;
+
+  const metrics = [
+    { label: 'TEA (TASA EFECTIVA ANUAL)', value: `${(tea * 100).toFixed(2)}%` },
+    { label: 'TCEA', value: `${(tcea * 100).toFixed(2)}%` },
+    { label: 'INTERÉS DE GRACIA', value: `S/ ${fmt(graceInterest)}` },
+    { label: 'VAN / TIR', value: `S/ ${fmt(van)} / ${(tir * 100).toFixed(2)}%` },
+  ];
+
+  const totalRow = {
+    saldoInicial: rows.length > 0 ? rows[0].initialBalance : 0,
+    interes: rows.reduce((s, r) => s + r.interest, 0),
+    amortizacion: rows.reduce((s, r) => s + r.amortization, 0),
+    desgravamen: rows.reduce((s, r) => s + r.lifeInsurance, 0),
+    segVehicular: rows.reduce((s, r) => s + r.vehicleInsurance, 0),
+    saldoFinal: rows.length > 0 ? rows[rows.length - 1].finalBalance : 0,
+  };
 
   const metricLabels = [
     t('schedule.tea'),
@@ -75,26 +101,26 @@ const SchedulePage: React.FC = () => {
           </thead>
           <tbody className="divide-y divide-[var(--color-border-light)]">
             {rows.map((r) => {
-              const isGracia = r.gracia;
-              const isBalon = r.balon;
+              const isGracia = r.isGrace;
+              const isBalon = r.isBalloon;
               const rowBg = isGracia ? 'bg-[var(--color-primary-50)]' : isBalon ? 'bg-primary text-white' : 'bg-[var(--color-bg-surface)]';
 
               return (
-                <tr key={r.num} className={`${rowBg} hover:brightness-95 dark:hover:brightness-125 transition-all duration-150`}>
+                <tr key={r.period} className={`${rowBg} hover:brightness-95 dark:hover:brightness-125 transition-all duration-150`}>
                   <td className="px-4 py-3">
                     <div className="flex items-center gap-2">
                       {isGracia && <PauseCircle size={14} className="text-[var(--color-text-primary)]" />}
-                      <span>{isBalon ? ( <span className="bg-[var(--color-accent-secondary)] text-white text-xs rounded px-1.5 py-0.5">{t('schedule.balloonPayment')}</span> ) : r.num}</span>
+                      <span>{isBalon ? ( <span className="bg-[var(--color-accent-secondary)] text-white text-xs rounded px-1.5 py-0.5">{t('schedule.balloonPayment')}</span> ) : r.period}</span>
                     </div>
                   </td>
-                  <td className="px-4 py-3">{r.fecha}</td>
-                  <td className="px-4 py-3">S/ {fmt(r.saldoInicial)}</td>
-                  <td className="px-4 py-3">S/ {fmt(r.interes)}</td>
-                  <td className="px-4 py-3">{isGracia ? '0.00' : `S/ ${fmt(r.amortizacion)}`}</td>
-                  <td className="px-4 py-3">S/ {fmt(r.desgravamen)}</td>
-                  <td className="px-4 py-3">S/ {fmt(r.segVehicular)}</td>
-                  <td className="px-4 py-3">S/ {fmt(r.cuotaTotal)}</td>
-                  <td className="px-4 py-3">S/ {fmt(r.saldoFinal)}</td>
+                  <td className="px-4 py-3">{r.date}</td>
+                  <td className="px-4 py-3">S/ {fmt(r.initialBalance)}</td>
+                  <td className="px-4 py-3">S/ {fmt(r.interest)}</td>
+                  <td className="px-4 py-3">{isGracia ? '0.00' : `S/ ${fmt(r.amortization)}`}</td>
+                  <td className="px-4 py-3">S/ {fmt(r.lifeInsurance)}</td>
+                  <td className="px-4 py-3">S/ {fmt(r.vehicleInsurance)}</td>
+                  <td className="px-4 py-3">S/ {fmt(r.totalPayment)}</td>
+                  <td className="px-4 py-3">S/ {fmt(r.finalBalance)}</td>
                 </tr>
               );
             })}
