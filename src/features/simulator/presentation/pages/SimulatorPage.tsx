@@ -6,7 +6,6 @@ import {
   AdvancedConfigForm,
   SimulationSummary,
 } from '../components';
-import { simulatorRepositoryImpl } from '../../data/repositories/simulatorRepositoryImpl';
 import { saveSimulation } from '../../data/remote/services/simulatorService';
 import { vehicleRepositoryImpl } from '../../../catalog/data/repositories/vehicleRepositoryImpl';
 import { calculateLoan } from '../../../analytics/data/remote/services/simulationService';
@@ -30,7 +29,7 @@ function createInitialInput(vehiclePrice = 32500): SimulationInput {
     financedAmount: vehiclePrice * 0.80,
     tea: 0.145,
     bank: 'BCP',
-    termMonths: 48,
+    termMonths: 24,
     paymentFrequency: 'Mensual',
     balloonPct: 40,
     balloonAmount: vehiclePrice * 0.40,
@@ -93,6 +92,17 @@ const SimulatorPage: React.FC = () => {
     setValidationError('');
   };
 
+  const riskLevelToVehicleType: Record<string, string> = {
+    BAJO_RIESGO_1: 'LOW_RISK_1',
+    BAJO_RIESGO_2: 'LOW_RISK_2',
+    MEDIANO_RIESGO: 'MEDIUM_RISK',
+    ALTO_RIESGO: 'HIGH_RISK',
+    PICK_UP: 'PICK_UP',
+    CHINOS_INDIOS: 'CHINESE_INDIANS',
+    L8: 'L8',
+    OTROS: 'OTHERS',
+  };
+
   function inputToLoanParams(i: SimulationInput): LoanParams {
     return {
       vehiclePrice: i.vehiclePrice,
@@ -103,6 +113,9 @@ const SimulatorPage: React.FC = () => {
       seguroVehicular: i.includeVehicleInsurance ? 85 : 0,
       gracePeriodMonths: i.gracePeriodMonths,
       balloonPercent: i.balloonPct / 100,
+      vehicleId: Number(i.vehicleId) || 0,
+      vehicleType: riskLevelToVehicleType[i.riskLevel] ?? 'OTHERS',
+      bankEntity: i.bank,
     };
   }
 
@@ -152,16 +165,22 @@ const SimulatorPage: React.FC = () => {
       setValidationError('La cuota inicial no puede ser mayor o igual al precio del vehículo');
       return;
     }
-    if (input.tea <= 0 || input.tea >= 1) {
-      setValidationError(t('simulator.validationTea'));
+    const teaRange = getSuggestedTeaRange(input.financedAmount);
+    if (input.tea < teaRange.min || input.tea > teaRange.max) {
+      setValidationError(
+        t('simulator.validationTeaRange', {
+          min: (teaRange.min * 100).toFixed(2),
+          max: (teaRange.max * 100).toFixed(2),
+        })
+      );
       return;
     }
     if (input.balloonPct < 0 || input.balloonPct > 100) {
       setValidationError('El porcentaje de cuota balón debe estar entre 0% y 100%');
       return;
     }
-    if (input.termMonths <= 0 || input.termMonths > 120) {
-      setValidationError(t('simulator.validationTerm'));
+    if (input.termMonths !== 24 && input.termMonths !== 36) {
+      setValidationError('El plazo del crédito debe ser de 2 o 3 años (24 o 36 meses)');
       return;
     }
     if (input.hasGracePeriod && !input.gracePeriodType) {
@@ -190,14 +209,9 @@ const SimulatorPage: React.FC = () => {
       } catch {
         // noop
       }
-    } catch {
-      const simResult = simulatorRepositoryImpl.calculate(input);
-      setResult(simResult);
-      try {
-        saveSimulation(simResult);
-      } catch {
-        // noop
-      }
+    } catch (err: any) {
+      console.error(err);
+      setValidationError(err?.message || 'Error al conectar con el servidor para calcular la simulación');
     } finally {
       setIsCalculating(false);
     }

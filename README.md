@@ -264,7 +264,7 @@ pnpm add @tanstack/react-query awilix i18next i18next-browser-languagedetector l
 ```
 
 ```bash
-pnpm install tailwindcss @tailwindcss/vite
+pnpm install tailwindcss @tailwindcss/vite react-icons --save
 ```
 
 ## Commands

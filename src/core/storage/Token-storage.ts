@@ -14,6 +14,6 @@ export class TokenStorage {
   }
 
   async deleteAll(): Promise<void> {
-    localStorage.clear();
+    localStorage.removeItem(StorageKeys.accessToken);
   }
 }

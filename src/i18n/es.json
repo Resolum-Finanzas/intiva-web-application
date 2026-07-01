@@ -55,8 +55,8 @@
     "step1Desc": "Explora nuestro catálogo y selecciona el vehículo ideal para ti.",
     "step2Title": "Configura tu crédito",
     "step2Desc": "Usa el simulador para ajustar cuotas y plazos según tu presupuesto.",
-    "step3Title": "Aprobación",
-    "step3Desc": "Completa tus datos y obtén respuesta inmediata sobre tu crédito.",
+    "step3Title": "Revisa tu plan de pagos",
+    "step3Desc": "Analiza el cronograma detallado de tus cuotas, intereses y seguros.",
     "step4Title": "¡Conduce!",
     "step4Desc": "Firma los documentos y recibe las llaves de tu auto nuevo.",
     "howItWorksTitle": "¿Cómo Funciona Intiva?"
@@ -129,6 +129,8 @@
     "months": "meses",
     "paymentFrequency": "Frecuencia de Pago",
     "monthly": "Mensual",
+    "quarterly": "Trimestral",
+    "semiAnnually": "Semestral",
     "vehicleInsurance": "Seguro Vehicular",
     "vehicleInsuranceDesc": "Incluir seguro en las cuotas del crédito",
     "lifeInsurance": "Seguro de Desgravamen",
@@ -151,6 +153,7 @@
     "newSimulation": "Nueva Simulación",
     "validationDownPayment": "La cuota inicial debe ser al menos 10%",
     "validationTea": "La TEA debe ser un valor entre 0% y 100%",
+    "validationTeaRange": "La TEA debe estar dentro del rango sugerido para su monto: {{min}}% - {{max}}%",
     "validationTerm": "El plazo debe ser mayor a 0 meses",
     "validationGracePeriod": "El período de gracia debe ser menor al plazo total",
     "results": "Resultados de la Simulación",
@@ -194,10 +197,19 @@
     "registerHeroDesc": "Registra tus datos, compara opciones de crédito y construye un historial confiable para tu próximo auto.",
     "acceptTermsError": "Debes aceptar los términos y la política de privacidad.",
     "passwordsMustMatch": "Las contraseñas deben coincidir.",
-    "invalidCredentials": "Credenciales inválidas",
+    "invalidCredentials": "Correo o contraseña incorrectos",
     "loginError": "Error al iniciar sesión",
     "continueWithGoogle": "Continuar con Google",
-    "or": "o"
+    "or": "o",
+    "errors": {
+      "invalidCredentials": "El correo o la contraseña que ingresaste no son correctos. Verifica tus datos y vuelve a intentarlo.",
+      "unauthorized": "No autorizado. Inicia sesión para continuar.",
+      "forbidden": "No tienes permisos para realizar esta acción.",
+      "notFound": "Servicio no disponible. Por favor, intenta más tarde.",
+      "invalidData": "Los datos ingresados no son válidos. Revisa los campos e intenta nuevamente.",
+      "serverError": "Error en el servidor. Por favor, intenta más tarde.",
+      "unknownError": "Ocurrió un error inesperado. Por favor, intenta nuevamente."
+    }
   },
   "validation": {
     "required": "Este campo es requerido",
@@ -302,6 +314,9 @@
   },
   "schedule": {
     "title": "Cronograma de Pagos",
+    "emptyTitle": "Sin simulación activa",
+    "emptyDesc": "Aún no has configurado ninguna simulación de crédito vehicular. Realiza una simulación en minutos para visualizar tu cronograma de pagos, amortizaciones detalladas, intereses y seguros.",
+    "startSimulationCta": "Realizar simulación",
     "totals": "TOTALES",
     "installment": "N°",
     "date": "FECHA",

@@ -137,9 +137,12 @@ const BasicDataForm: React.FC<BasicDataFormProps> = ({ input, onChange, teaRange
               type="number"
               step="0.01"
               min={0}
+              max={100}
               value={Number((input.tea * 100).toFixed(2))}
               onChange={(e) => {
-                const v = Math.max(0, Number(e.target.value));
+                let v = Number(e.target.value);
+                if (Number.isNaN(v)) v = 0;
+                v = Math.min(100, Math.max(0, v));
                 onChange('tea', v / 100);
               }}
               className="w-full border border-gray-200 rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-accent-primary)]"

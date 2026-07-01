@@ -13,7 +13,7 @@ export interface SimulationInput {
   bank: 'BCP';
 
   termMonths: number;
-  paymentFrequency: 'Mensual';
+  paymentFrequency: 'Mensual' | 'Trimestral' | 'Semestral';
   balloonPct: number;
   balloonAmount: number;
 

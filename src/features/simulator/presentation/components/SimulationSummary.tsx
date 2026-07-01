@@ -1,7 +1,7 @@
 import { ArrowRight, Info, Loader } from 'lucide-react';
 import type { SimulationInput } from '../../domain/models/simulationInput';
 import type { SimulationResult } from '../../domain/models/simulationResult';
-import { estimateMonthlyPayment, getSuggestedTeaRange } from '../../domain/utils/financialCalculations';
+import { getSuggestedTeaRange } from '../../domain/utils/financialCalculations';
 import { useI18n } from '../../../../core/i18n/useI18n';
 
 interface SimulationSummaryProps {
@@ -15,10 +15,6 @@ interface SimulationSummaryProps {
 const fmt = (n: number) =>
   new Intl.NumberFormat('en-US', { minimumFractionDigits: 2 }).format(n);
 
-function estimatedCuota(input: SimulationInput): number {
-  return estimateMonthlyPayment(input.financedAmount, input.tea, input.termMonths);
-}
-
 const SimulationSummary: React.FC<SimulationSummaryProps> = ({
   input,
   result,
@@ -27,7 +23,6 @@ const SimulationSummary: React.FC<SimulationSummaryProps> = ({
   validationError,
 }) => {
   const { t } = useI18n();
-  const estCuota = estimatedCuota(input);
 
   const teaRange = getSuggestedTeaRange(input.financedAmount);
 
@@ -41,12 +36,12 @@ const SimulationSummary: React.FC<SimulationSummaryProps> = ({
           <span className="text-4xl font-bold">$ {
             result
               ? fmt(result.estimatedMonthlyPayment).split('.')[0]
-              : fmt(estCuota).split('.')[0]
+              : '0'
           }</span>
           <span className="text-xl font-bold">
             .{result
               ? fmt(result.estimatedMonthlyPayment).split('.')[1]
-              : fmt(estCuota).split('.')[1]
+              : '00'
             }
           </span>
         </p>
