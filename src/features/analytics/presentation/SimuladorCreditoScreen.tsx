@@ -1,18 +1,13 @@
-import { useState } from 'react';
 import PageContainer from '../../../shared/presentation/components/pagecontainer/PageContainer.component';
 import { useSimulator } from './hooks/useSimulator';
 import SimulatorForm from './components/SimulatorForm';
 import SimulatorResults from './components/SimulatorResults';
 
 const SimuladorCreditoScreen: React.FC = () => {
-  const { params, result, saved, setSaved, updateParam, calculate, reset } = useSimulator();
-  const [loading, setLoading] = useState(false);
+  const { params, result, saved, calculating, setSaved, updateParam, calculate, reset } = useSimulator();
 
-  const handleCalculate = async () => {
-    setLoading(true);
-    await new Promise((r) => setTimeout(r, 400));
+  const handleCalculate = () => {
     calculate();
-    setLoading(false);
   };
 
   const handleSave = async () => {
@@ -49,7 +44,7 @@ const SimuladorCreditoScreen: React.FC = () => {
           params={params}
           onUpdateParam={updateParam}
           onCalculate={handleCalculate}
-          loading={loading}
+          loading={calculating}
         />
 
         {result && (

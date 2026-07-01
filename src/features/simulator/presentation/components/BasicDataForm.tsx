@@ -1,5 +1,8 @@
+import { useState, useEffect } from 'react';
 import { FileText, ChevronDown } from 'lucide-react';
 import type { SimulationInput } from '../../domain/models/simulationInput';
+import { vehicleRepositoryImpl } from '../../../catalog/data/repositories/vehicleRepositoryImpl';
+import type { Vehicle } from '../../../catalog/domain/models/vehicle';
 import { useI18n } from '../../../../core/i18n/useI18n';
 
 interface BasicDataFormProps {
@@ -13,8 +16,30 @@ const fmt = (n: number) =>
 
 const BasicDataForm: React.FC<BasicDataFormProps> = ({ input, onChange, teaRange }) => {
   const { t } = useI18n();
+  const [vehicles, setVehicles] = useState<Vehicle[]>([]);
+
+  useEffect(() => {
+    vehicleRepositoryImpl.getAll().then(setVehicles);
+  }, []);
+
+  const handleVehicleChange = (vehicleId: string) => {
+    const vehicle = vehicles.find((v) => v.id === vehicleId);
+    if (vehicle) {
+      const price = vehicle.price.amount;
+      onChange('vehicleId', vehicle.id);
+      onChange('vehicleName', `${vehicle.name} ${vehicle.variant} ${vehicle.year}`);
+      onChange('vehiclePrice', price);
+      onChange('vehicleLocation', vehicle.location);
+      onChange('downPaymentPct', 20);
+      onChange('downPaymentAmount', price * 0.20);
+      onChange('financedAmount', price * 0.80);
+      onChange('balloonPct', 40);
+      onChange('balloonAmount', price * 0.40);
+    }
+  };
+
   const handleDownPaymentPct = (value: number) => {
-    const pct = Math.min(60, Math.max(10, value));
+    const pct = Math.min(60, Math.max(10, Math.max(0, value)));
     const amount = input.vehiclePrice * (pct / 100);
     onChange('downPaymentPct', pct);
     onChange('downPaymentAmount', amount);
@@ -29,6 +54,24 @@ const BasicDataForm: React.FC<BasicDataFormProps> = ({ input, onChange, teaRange
       </h3>
 
       <div className="space-y-5">
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-1.5">
+            Vehículo
+          </label>
+          <select
+            value={input.vehicleId}
+            onChange={(e) => handleVehicleChange(e.target.value)}
+            className="w-full border border-gray-200 rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-accent-primary)]"
+          >
+            <option value="">Seleccionar vehículo</option>
+            {vehicles.map((v) => (
+              <option key={v.id} value={v.id}>
+                {v.name} {v.variant} {v.year} - {v.price.formatted}
+              </option>
+            ))}
+          </select>
+        </div>
+
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1.5">
             {t('simulator.downPayment')}
@@ -93,8 +136,12 @@ const BasicDataForm: React.FC<BasicDataFormProps> = ({ input, onChange, teaRange
             <input
               type="number"
               step="0.01"
+              min={0}
               value={Number((input.tea * 100).toFixed(2))}
-              onChange={(e) => onChange('tea', Number(e.target.value) / 100)}
+              onChange={(e) => {
+                const v = Math.max(0, Number(e.target.value));
+                onChange('tea', v / 100);
+              }}
               className="w-full border border-gray-200 rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-accent-primary)]"
             />
             <p className="text-xs text-gray-500 mt-1">
@@ -114,8 +161,6 @@ const BasicDataForm: React.FC<BasicDataFormProps> = ({ input, onChange, teaRange
               className="w-full border border-gray-200 rounded-lg px-4 py-3 text-sm appearance-none focus:outline-none focus:ring-2 focus:ring-[var(--color-accent-primary)] bg-[var(--color-bg-surface)]"
             >
               <option value="BCP">BCP</option>
-              <option value="BBVA">BBVA</option>
-              <option value="Interbank">Interbank</option>
             </select>
             <ChevronDown size={16} className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none" />
           </div>

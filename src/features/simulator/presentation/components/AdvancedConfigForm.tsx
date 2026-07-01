@@ -135,11 +135,11 @@ const AdvancedConfigForm: React.FC<AdvancedConfigFormProps> = ({ input, onChange
               <div className="flex items-center gap-2">
                 <input
                   type="number"
-                  min={1}
+                  min={0}
                   max={input.termMonths - 1}
                   value={input.gracePeriodMonths}
                   onChange={(e) => {
-                    const v = Math.min(input.termMonths - 1, Math.max(1, Number(e.target.value)));
+                    const v = Math.min(input.termMonths - 1, Math.max(0, Number(e.target.value)));
                     onChange('gracePeriodMonths', v);
                   }}
                   className="w-20 border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-accent-primary)]"

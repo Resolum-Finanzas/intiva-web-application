@@ -1,6 +1,7 @@
 import { useState, useCallback } from 'react';
 import type { LoanParams, SimulationResult } from '../../domain/models/Simulation';
 import { simulateCredito } from '../../domain/services/creditoCalculator';
+import { calculateLoan } from '../../data/remote/services/simulationService';
 
 const DEFAULT_PARAMS: LoanParams = {
   vehiclePrice: 65000,
@@ -17,6 +18,8 @@ export function useSimulator() {
   const [params, setParams] = useState<LoanParams>(DEFAULT_PARAMS);
   const [result, setResult] = useState<SimulationResult | null>(null);
   const [saved, setSaved] = useState(false);
+  const [calculating, setCalculating] = useState(false);
+  const [error, setError] = useState('');
 
   const updateParam = useCallback(<K extends keyof LoanParams>(
     key: K,
@@ -27,22 +30,33 @@ export function useSimulator() {
     setSaved(false);
   }, []);
 
-  const calculate = useCallback(() => {
-    const simResult = simulateCredito(params);
-    setResult(simResult);
-    setSaved(false);
+  const calculate = useCallback(async () => {
+    setCalculating(true);
+    setError('');
+    try {
+      const simResult = await calculateLoan(params);
+      setResult(simResult);
+      setSaved(false);
+    } catch {
+      const fallback = simulateCredito(params);
+      setResult(fallback);
+    } finally {
+      setCalculating(false);
+    }
   }, [params]);
 
   const reset = useCallback(() => {
     setParams(DEFAULT_PARAMS);
     setResult(null);
     setSaved(false);
+    setError('');
   }, []);
 
   return {
     params,
     result,
     saved,
+    calculating,
     setSaved,
     updateParam,
     calculate,

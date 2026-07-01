@@ -1,15 +1,22 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Fuel, Users, ShieldCheck, Gauge } from 'lucide-react';
 import { vehicleRepositoryImpl } from '../../data/repositories/vehicleRepositoryImpl';
+import type { Vehicle } from '../../domain/models/vehicle';
 import { useI18n } from '../../../../core/i18n/useI18n';
 
 const VehicleDetailPage: React.FC = () => {
   const { t } = useI18n();
   const { vehicleId } = useParams<{ vehicleId: string }>();
   const navigate = useNavigate();
-  const vehicle = vehicleRepositoryImpl.getById(vehicleId ?? '');
+  const [vehicle, setVehicle] = useState<Vehicle | null>(null);
   const [activeImage, setActiveImage] = useState(0);
+
+  useEffect(() => {
+    if (vehicleId) {
+      vehicleRepositoryImpl.getById(vehicleId).then(setVehicle);
+    }
+  }, [vehicleId]);
 
   if (!vehicle) {
     return (

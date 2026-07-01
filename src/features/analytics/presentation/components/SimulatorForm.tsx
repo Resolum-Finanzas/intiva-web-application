@@ -1,6 +1,7 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Calculator } from 'lucide-react';
 import { vehicleRepositoryImpl } from '../../../catalog/data/repositories/vehicleRepositoryImpl';
+import type { Vehicle } from '../../../catalog/domain/models/vehicle';
 import type { LoanParams } from '../../domain/models/Simulation';
 
 interface SimulatorFormProps {
@@ -13,8 +14,6 @@ interface SimulatorFormProps {
 const TERM_OPTIONS = [12, 24, 36, 48, 60, 72, 84];
 const GRACE_OPTIONS = [0, 3, 6, 12];
 
-const vehicles = vehicleRepositoryImpl.getAll();
-
 const fmtCurrency = (n: number) =>
   n.toLocaleString('en-US', { style: 'currency', currency: 'USD', minimumFractionDigits: 2 });
 
@@ -24,7 +23,12 @@ const SimulatorForm: React.FC<SimulatorFormProps> = ({
   onCalculate,
   loading,
 }) => {
+  const [vehicles, setVehicles] = useState<Vehicle[]>([]);
   const [selectedVehicleId, setSelectedVehicleId] = useState('');
+
+  useEffect(() => {
+    vehicleRepositoryImpl.getAll().then(setVehicles);
+  }, []);
 
   const handleVehicleChange = (vehicleId: string) => {
     setSelectedVehicleId(vehicleId);

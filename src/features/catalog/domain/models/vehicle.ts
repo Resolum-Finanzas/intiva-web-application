@@ -1,6 +1,6 @@
 import type { Price } from './price';
 
-export type VehicleCategory = 'SUV' | 'Sedan' | 'Electrico' | 'Hibrido';
+export type VehicleCategory = string;
 export type VehicleBadge = 'Hybrid' | 'Premium' | '100% Electric';
 
 export interface VehicleSpecs {
