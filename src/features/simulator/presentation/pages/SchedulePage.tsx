@@ -128,7 +128,7 @@ const SchedulePage: React.FC = () => {
                       <span>{isBalon ? ( <span className="bg-[var(--color-accent-secondary)] text-white text-xs rounded px-1.5 py-0.5">{t('schedule.balloonPayment')}</span> ) : r.period}</span>
                     </div>
                   </td>
-                  <td className="px-4 py-3">{r.date}</td>
+                  <td className="px-4 py-3">{r.date.split(' ')[0]}</td>
                   <td className="px-4 py-3">$ {fmt(r.initialBalance)}</td>
                   <td className="px-4 py-3">$ {fmt(r.interest)}</td>
                   <td className="px-4 py-3">{isGracia ? '0.00' : `$ ${fmt(r.amortization)}`}</td>

@@ -172,7 +172,7 @@
     "segVehicular": "SEG. VEHICULAR",
     "cuotaTotal": "CUOTA TOTAL",
     "finalBalance": "SALDO FINAL",
-    "balloonPayment": "CUOTA BALÓN"
+    "balloonPayment": "Cuota Balón"
   },
   "auth": {
     "signIn": "Iniciar Sesión",
@@ -327,7 +327,7 @@
     "vehicleInsurance": "SEG. VEHICULAR",
     "totalPayment": "CUOTA TOTAL",
     "finalBalance": "SALDO FINAL",
-    "balloonPayment": "CUOTA BALÓN",
+    "balloonPayment": "Cuota Balón",
     "tea": "TEA (TASA EFECTIVA ANUAL)",
     "tcea": "TCEA",
     "graceInterest": "INTERÉS DE GRACIA",
