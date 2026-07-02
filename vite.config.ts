@@ -13,7 +13,7 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: 'http://localhost:5001',
+        target: 'https://intiva-finanzas-hxhxe0gpghfcdugw.chilecentral-01.azurewebsites.net',
         changeOrigin: true,
       },
     },
