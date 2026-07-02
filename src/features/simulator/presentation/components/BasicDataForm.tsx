@@ -46,6 +46,12 @@ const BasicDataForm: React.FC<BasicDataFormProps> = ({ input, onChange, teaRange
     onChange('financedAmount', input.vehiclePrice - amount);
   };
 
+  const handleBalloonPct = (value: number) => {
+    const pct = Math.min(100, Math.max(0, Number.isNaN(value) ? 0 : value));
+    onChange('balloonPct', pct);
+    onChange('balloonAmount', input.vehiclePrice * (pct / 100));
+  };
+
   return (
     <div>
       <h3 className="text-base font-bold text-[var(--color-text-primary)] mb-5 flex items-center gap-2">
@@ -113,6 +119,25 @@ const BasicDataForm: React.FC<BasicDataFormProps> = ({ input, onChange, teaRange
           <div className="flex justify-between text-xs text-gray-400 mt-1">
             <span>{t('simulator.minLabel')}</span>
             <span>{t('simulator.maxLabel')}</span>
+          </div>
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-1.5">
+            {t('simulator.balloonPayment')}
+          </label>
+          <div className="flex gap-3 items-center">
+            <div className="relative w-20">
+              <input
+                type="text"
+                inputMode="numeric"
+                value={input.balloonPct}
+                onChange={(e) => handleBalloonPct(Number(e.target.value))}
+                className="w-full border border-gray-200 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-accent-primary)] pr-7 [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
+              />
+              <span className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-400 text-sm">%</span>
+            </div>
+            
           </div>
         </div>
 

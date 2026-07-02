@@ -172,7 +172,7 @@
     "segVehicular": "VEHICLE INSURANCE",
     "cuotaTotal": "TOTAL PAYMENT",
     "finalBalance": "FINAL BALANCE",
-    "balloonPayment": "BALLOON PAYMENT"
+    "balloonPayment": "Balloon Payment"
   },
   "auth": {
     "signIn": "Sign In",
@@ -327,7 +327,7 @@
     "vehicleInsurance": "VEHICLE INSURANCE",
     "totalPayment": "TOTAL PAYMENT",
     "finalBalance": "FINAL BALANCE",
-    "balloonPayment": "BALLOON PAYMENT",
+    "balloonPayment": "Balloon Payment",
     "tea": "TEA (ANNUAL EFFECTIVE RATE)",
     "tcea": "TCEA",
     "graceInterest": "GRACE INTEREST",
