@@ -154,6 +154,25 @@ const AdvancedConfigForm: React.FC<AdvancedConfigFormProps> = ({ input, onChange
 
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1.5">
+            % Cuota balón
+          </label>
+          <input
+            type="number"
+            min={0}
+            max={100}
+            value={input.balloonPct}
+            onChange={(e) => {
+              const v = Number(e.target.value);
+              if (!Number.isNaN(v)) {
+                onChange('balloonPct', Math.min(100, Math.max(0, v)));
+              }
+            }}
+            className="w-full border border-gray-200 rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-accent-primary)]"
+          />
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-1.5">
             {t('simulator.startDate')}
           </label>
           <input
