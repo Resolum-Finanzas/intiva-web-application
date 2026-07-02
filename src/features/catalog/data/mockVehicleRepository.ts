@@ -4,38 +4,47 @@ import { getVehicles } from './remote/services/vehicleService';
 
 function mapToDomain(dto: import('./remote/models/vehicleDto').VehicleDto): Vehicle {
   return {
-    id: dto.id,
-    name: dto.name,
+    id: String(dto.id),
+    name: `${dto.make} ${dto.model}`,
     year: dto.year,
-    variant: dto.variant,
-    category: dto.category,
-    badge: dto.badge,
+    variant: dto.version,
+    category: dto.vehicle_type as VehicleCategory,
+    badge: null,
     price: {
-      amount: dto.price.amount,
-      currency: dto.price.currency,
-      formatted: `$${dto.price.amount.toLocaleString('en-US')}`,
+      amount: dto.price,
+      currency: 'USD',
+      formatted: `$${dto.price.toLocaleString('en-US')}`,
     },
-    imageUrl: dto.imageUrl,
-    images: dto.images,
-    specs: { ...dto.specs },
-    description: dto.description,
-    location: dto.location,
+    imageUrl: dto.photo_url,
+    images: [dto.photo_url],
+    specs: {
+      transmission: dto.transmission || '',
+      engine: dto.fuel_type,
+      drivetrain: dto.drivetrain,
+      safety: dto.specs?.safety,
+      fuelEconomy: dto.specs?.combined_consumption,
+    },
+    description: '',
+    location: '',
   };
 }
 
 export const mockVehicleRepository: VehicleRepository = {
-  getAll(): Vehicle[] {
-    return getVehicles().map(mapToDomain);
+  async getAll(): Promise<Vehicle[]> {
+    const dtos = await getVehicles();
+    return dtos.map(mapToDomain);
   },
 
-  getById(id: string): Vehicle | undefined {
-    const dto = getVehicles().find((v) => v.id === id);
-    return dto ? mapToDomain(dto) : undefined;
+  async getById(id: string): Promise<Vehicle | null> {
+    const dtos = await getVehicles();
+    const dto = dtos.find((v) => String(v.id) === id);
+    return dto ? mapToDomain(dto) : null;
   },
 
-  getByCategory(category: VehicleCategory): Vehicle[] {
-    return getVehicles()
-      .filter((v) => v.category === category)
+  async getByCategory(category: VehicleCategory): Promise<Vehicle[]> {
+    const dtos = await getVehicles();
+    return dtos
+      .filter((v) => v.vehicle_type === category)
       .map(mapToDomain);
   },
 };
