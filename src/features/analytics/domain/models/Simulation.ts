@@ -7,6 +7,11 @@ export interface LoanParams {
   seguroVehicular: number;
   gracePeriodMonths?: number;
   balloonPercent?: number;
+  vehicleId?: number;
+  vehicleType?: string;
+  bankEntity?: string;
+  userId?: number;
+  paymentFrequency?: string;
 }
 
 export interface Installment {

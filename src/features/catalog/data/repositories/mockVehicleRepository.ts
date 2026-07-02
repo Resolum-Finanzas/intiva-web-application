@@ -12,8 +12,8 @@ function mapToDomain(dto: import('../remote/models/vehicleDto').VehicleDto): Veh
     badge: null,
     price: {
       amount: dto.price,
-      currency: 'PEN',
-      formatted: `S/ ${dto.price.toLocaleString('es-PE')}`,
+      currency: 'USD',
+      formatted: `$${dto.price.toLocaleString('en-US')}`,
     },
     imageUrl: dto.photo_url,
     images: [dto.photo_url],

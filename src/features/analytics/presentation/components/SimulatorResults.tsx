@@ -28,10 +28,10 @@ const SimulatorResults: React.FC<SimulatorResultsProps> = ({ result, onSave }) =
   const metricCards = [
     { icon: TrendingUp, label: 'TEA', value: fmtPct(metrics.tea) },
     { icon: BarChart3, label: 'TCEA', value: fmtPct(metrics.tcea) },
-    { icon: PiggyBank, label: 'Cuota Mensual', value: `S/ ${fmt(metrics.cuotaMensual)}` },
-    { icon: PauseCircle, label: 'Interés de Gracia', value: `S/ ${fmt(metrics.interesGracia)}` },
-    { icon: Shield, label: 'Total Seguros', value: `S/ ${fmt(metrics.totalDesgravamen + metrics.totalSeguro)}` },
-    { icon: Car, label: 'Total Financiado', value: `S/ ${fmt(metrics.totalFinanciado)}` },
+    { icon: PiggyBank, label: 'Cuota Mensual', value: `$ ${fmt(metrics.cuotaMensual)}` },
+    { icon: PauseCircle, label: 'Interés de Gracia', value: `$ ${fmt(metrics.interesGracia)}` },
+    { icon: Shield, label: 'Total Seguros', value: `$ ${fmt(metrics.totalDesgravamen + metrics.totalSeguro)}` },
+    { icon: Car, label: 'Total Financiado', value: `$ ${fmt(metrics.totalFinanciado)}` },
   ];
 
   const totals = {
@@ -123,28 +123,28 @@ const SimulatorResults: React.FC<SimulatorResultsProps> = ({ result, onSave }) =
                       </div>
                     </td>
                     <td className="px-3 py-2.5">{r.fecha}</td>
-                    <td className="px-3 py-2.5">S/ {fmt(r.saldoInicial)}</td>
-                    <td className="px-3 py-2.5">S/ {fmt(r.interes)}</td>
+                    <td className="px-3 py-2.5">$ {fmt(r.saldoInicial)}</td>
+                    <td className="px-3 py-2.5">$ {fmt(r.interes)}</td>
                     <td className="px-3 py-2.5">
-                      {r.isGrace ? '0.00' : `S/ ${fmt(r.amortizacion)}`}
+                      {r.isGrace ? '0.00' : `$ ${fmt(r.amortizacion)}`}
                     </td>
-                    <td className="px-3 py-2.5">S/ {fmt(r.desgravamen)}</td>
-                    <td className="px-3 py-2.5">S/ {fmt(r.seguroVehicular)}</td>
-                    <td className="px-3 py-2.5">S/ {fmt(r.cuotaTotal)}</td>
-                    <td className="px-3 py-2.5">S/ {fmt(r.saldoFinal)}</td>
+                    <td className="px-3 py-2.5">$ {fmt(r.desgravamen)}</td>
+                    <td className="px-3 py-2.5">$ {fmt(r.seguroVehicular)}</td>
+                    <td className="px-3 py-2.5">$ {fmt(r.cuotaTotal)}</td>
+                    <td className="px-3 py-2.5">$ {fmt(r.saldoFinal)}</td>
                   </tr>
                 );
               })}
 
               <tr className="bg-[var(--color-accent-primary)] text-white font-bold">
                 <td className="px-3 py-2.5" colSpan={2}>TOTALES</td>
-                <td className="px-3 py-2.5">S/ {fmt(totals.saldoInicial)}</td>
-                <td className="px-3 py-2.5">S/ {fmt(totals.interes)}</td>
-                <td className="px-3 py-2.5">S/ {fmt(totals.amortizacion)}</td>
-                <td className="px-3 py-2.5">S/ {fmt(totals.desgravamen)}</td>
-                <td className="px-3 py-2.5">S/ {fmt(totals.seguro)}</td>
+                <td className="px-3 py-2.5">$ {fmt(totals.saldoInicial)}</td>
+                <td className="px-3 py-2.5">$ {fmt(totals.interes)}</td>
+                <td className="px-3 py-2.5">$ {fmt(totals.amortizacion)}</td>
+                <td className="px-3 py-2.5">$ {fmt(totals.desgravamen)}</td>
+                <td className="px-3 py-2.5">$ {fmt(totals.seguro)}</td>
                 <td className="px-3 py-2.5" />
-                <td className="px-3 py-2.5">S/ {fmt(totals.saldoFinal)}</td>
+                <td className="px-3 py-2.5">$ {fmt(totals.saldoFinal)}</td>
               </tr>
             </tbody>
           </table>

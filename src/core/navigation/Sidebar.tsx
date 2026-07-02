@@ -5,7 +5,6 @@ import {
   Car,
   Calculator,
   Calendar,
-  Settings,
   User,
   ChevronRight
 } from 'lucide-react';
@@ -42,7 +41,6 @@ const navItems: NavItem[] = [
       { label: 'Schedule', icon: Calendar },
     ],
   },
-  { label: 'Settings', icon: Settings }
 ];
 
 const getInitials = (name: string): string =>
