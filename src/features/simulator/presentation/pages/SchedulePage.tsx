@@ -11,7 +11,7 @@ const fmt = (n: number) => n.toLocaleString('en-US', { minimumFractionDigits: 2,
 const SchedulePage: React.FC = () => {
   const { t } = useI18n();
   const navigate = useNavigate();
-  const [result, setResult] = useState<SimulationResult | null>(() => getLastSimulation());
+  const [result] = useState<SimulationResult | null>(() => getLastSimulation());
 
   if (!result) {
     return (
